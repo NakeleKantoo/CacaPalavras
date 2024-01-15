@@ -1,0 +1,105 @@
+local todas = {
+    "livro",
+    "caneta",
+    "garfo",
+    "panela",
+    "mesa",
+    "cama",
+    "bolsa",
+    "menina",
+    "garoto",
+    "pai",
+    "mae",
+    "homem",
+    "mulher",
+    "medica",
+    "ator",
+    "gato",
+    "cavalo",
+    "tigre",
+    "mico",
+    "capim",
+    "goiaba",
+    "banana",
+    "limao",
+    "mamao",
+    "ilha",
+    "lago",
+    "rio",
+    "mangue",
+    "serra",
+    "bairro",
+    "cidade",
+    "pais",
+    "manha",
+    "noite",
+    "dia",
+    "sol",
+    "chuva",
+    "vento",
+    "mes",
+    "seculo",
+    "fada",
+    "bruxa",
+    "sereia",
+    "flor",
+    "roupa",
+    "agua",
+    "canela",
+    "recado",
+    "vida",
+    "espera",
+    "forca",
+    "povo",
+    "colega",
+    "aguia",
+    "boto",
+    "manga",
+    "ovo",
+    "fome",
+    "calor",
+    "frio",
+    "cartao",
+    "radio",
+    "pente",
+    "janela",
+    "tijolo",
+    "telha",
+    "jacare",
+    "jaca",
+    "maca",
+    "caqui",
+    "capim",
+    "ipe",
+    "cacto",
+    "chuva",
+    "vento",
+    "neve",
+    "noite",
+    "homem",
+    "mulher",
+    "praia",
+    "jardim",
+    "feira",
+    "cinema",
+    "bruxa",
+    "duende",
+}
+
+function getRandomWords(num)
+    local obj = {}
+    while #obj<num+1 do
+        local index = rng(1,#todas)
+        local word = todas[index]
+        local found = false
+        for k,v in ipairs(obj) do
+            if v==word then
+                found=true
+            end
+        end
+        if found==false then
+            table.insert(obj,word)
+        end
+    end
+    return obj
+end
