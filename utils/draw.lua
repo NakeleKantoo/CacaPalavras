@@ -40,13 +40,17 @@ function drawWords()
     for i,v in ipairs(txt) do
         if i%2==0 then wowText=wowText..v end
     end
-    local maxW = (textfont:getWidth(wowText)+20)
+    local maxW = math.min(textfont:getWidth(wowText)+20,screenw-50)
+    local h = textfont:getHeight()+10
+    if maxW==screenw-50 then
+        h = (h-10)*2+10
+    end
     local x = screenw/2-maxW/2
     local y = 15
 
     --draw back
     love.graphics.setColor(1,1,1)
-    love.graphics.rectangle('fill',x,y,maxW,textfont:getHeight()+10,15)
+    love.graphics.rectangle('fill',x,y,maxW-10,h,15)
     y=y+5
     --love.graphics.setColor(0,0,0)
     love.graphics.printf(txt,textfont,x,y,maxW,"center")

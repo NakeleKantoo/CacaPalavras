@@ -3,11 +3,14 @@ local alfabeto = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p
 function newBoard()
     ::retry:: --dont get stuck with hopeless placements (unlucky ahh random shit)
     local words = getRandomWords(numWords)
-    palavras={words[1],words[2],words[3],words[4],words[5]} --render things
+    palavras={}
+    for i=1,#words do
+        palavras[#palavras+1] = words[i]
+    end
     local obj = {}
     local placing = false
     local wordPlaced = ""
-    local orientations = {"h","v","d"} --horizontal, vertical, diagonal
+    local orientations = {"h","h","h","v","v","d"} --horizontal, vertical, diagonal
     for i=1,#words do
         local direction = orientations[rng(1,#orientations)]
         local word = words[i]

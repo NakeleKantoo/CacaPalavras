@@ -94,7 +94,14 @@ local todas = {
     "serra",
     "kiwi",
     "xicara",
-    "verde"
+    "verde",
+    "obvio",
+    "marca",
+    "mao",
+    "saturno",
+    "sufixo",
+    "venus",
+    "marte"
 }
 
 function getRandomWords(num)
