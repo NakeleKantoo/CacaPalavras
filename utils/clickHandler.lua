@@ -15,3 +15,17 @@ function checkWhichBlock(mx,my)
     end
     return 0
 end
+
+function checkDirection(origin,destiny)
+    if destiny<origin then return false end
+
+    if destiny-origin<boardW then return "h" end
+    if destiny-origin%boardW==0 then return "v" end
+    if destiny-origin%boardW<boardW then return "d" end
+
+    return false
+
+    --check for diagonal first?
+    --x+i-1+((y+i-1)*boardW)
+
+end

@@ -55,8 +55,16 @@ function drawLine()
         x=x+blockW+spacing
         if i%boardW==0 then y=y+blockH+spacing; x=screenw/2-maxW/2 end
     end
-    x=x+(blockW/4)
-    y=y+(blockH/4)
+    if directionClick=="h" then
+        --x=x+(blockW/4)
+        y=y+(blockH/2)
+    elseif directionClick=="v" then
+        x=x+(blockW/2)
+        --y=y+(blockH/2)
+    elseif directionClick=="d" then
+        x=x+(blockW/4)
+        y=y+(blockH/4)
+    end
 
     love.graphics.setLineWidth(blockW)
     love.graphics.setColor(1,0.9,0.1,0.3)

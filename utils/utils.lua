@@ -80,12 +80,6 @@ function newBoard()
             obj[i]=alfabeto[rng(1,#alfabeto)]
         end
     end
-
-
     return obj
 end
-
---ideally i'd just fill the words first and then i'd fill the random
-
---how to do vertical?
 

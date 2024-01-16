@@ -13,6 +13,10 @@ end
 function love.update(dt)
 
     if love.mouse.isDown(1) then
+        local mx, my = love.mouse.getPosition()
+        local block = checkWhichBlock(mx,my)
+        directionClick = checkDirection(clicked,block)
+        destinyClick=block
     else
         if clicked>0 then
             clicked=0
