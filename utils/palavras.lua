@@ -91,6 +91,10 @@ local todas = {
     "cinema",
     "bruxa",
     "duende",
+    "serra",
+    "kiwi",
+    "xicara",
+    "verde"
 }
 
 function getRandomWords(num)

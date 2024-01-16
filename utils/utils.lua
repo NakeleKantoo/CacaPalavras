@@ -1,13 +1,13 @@
 local alfabeto = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"}
 
 function newBoard()
-    local words = getRandomWords(5)
+    ::retry:: --dont get stuck with hopeless placements (unlucky ahh random shit)
+    local words = getRandomWords(numWords)
     palavras={words[1],words[2],words[3],words[4],words[5]} --render things
     local obj = {}
     local placing = false
     local wordPlaced = ""
     local orientations = {"h","v","d"} --horizontal, vertical, diagonal
-    ::retry:: --dont get stuck with hopeless placements (unlucky ahh random shit)
     for i=1,#words do
         local direction = orientations[rng(1,#orientations)]
         local word = words[i]
@@ -81,5 +81,11 @@ function newBoard()
         end
     end
     return obj
+end
+
+function checkVictory()
+    if #achadas==#palavras then
+        print("venceu")
+    end
 end
 

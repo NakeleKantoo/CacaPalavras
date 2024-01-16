@@ -20,12 +20,30 @@ function checkDirection(origin,destiny)
     if destiny<origin then return false end
 
     if destiny-origin<boardW then return "h" end
-    if destiny-origin%boardW==0 then return "v" end
-    if destiny-origin%boardW<boardW then return "d" end
+    if (destiny-origin)%boardW==0 then return "v" end
+    if (destiny-origin)%boardW<boardW then return "d" end
 
     return false
 
     --check for diagonal first?
     --x+i-1+((y+i-1)*boardW)
 
+end
+
+function checkWord(origin,destiny,dir)
+    local obj = ""
+    if directionClick=="h" then
+        for i=origin,destiny do
+            obj=obj..board[i]
+        end
+    elseif directionClick=="v" then
+        for i=origin,destiny,boardW do
+            obj=obj..board[i]
+        end
+    elseif directionClick=="d" then
+        for i=origin,destiny,boardW+1 do
+            obj=obj..board[i]
+        end
+    end
+    return obj
 end

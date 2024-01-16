@@ -4,6 +4,7 @@ boardW = 10
 boardH = 10
 blockW = 35
 blockH = 35
+numWords = 5
 board = {}
 palavras = {}
 love.math.setRandomSeed(os.time())
@@ -14,3 +15,5 @@ textfont = love.graphics.newFont(25)
 clicked = 0
 directionClick = false
 destinyClick = 0
+achadas = {}
+lines = {}

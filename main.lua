@@ -15,13 +15,25 @@ function love.update(dt)
     if love.mouse.isDown(1) then
         local mx, my = love.mouse.getPosition()
         local block = checkWhichBlock(mx,my)
-        directionClick = checkDirection(clicked,block)
-        destinyClick=block
+        if block>0 then
+            directionClick = checkDirection(clicked,block)
+            destinyClick=block
+        end
     else
         if clicked>0 then
+            --check word
+            local word = checkWord(clicked,destinyClick,directionClick)
+            for i,v in ipairs(palavras) do
+                if word==v then
+                    achadas[#achadas+1] = word
+                    lines[#lines+1] = {origin = clicked, destiny = destinyClick, direction = directionClick}   
+                end
+            end
+
             clicked=0
         end
     end
+    checkVictory()
 end
 
 function love.draw()
@@ -31,6 +43,7 @@ function love.draw()
     if clicked>0 then
         drawLine()
     end
+    drawFoundLines()
 end
 
 function love.mousepressed(x,y)
