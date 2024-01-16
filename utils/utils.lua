@@ -26,8 +26,8 @@ function newBoard()
                 y = rng(1,boardH-1)
                 --check if the place is occupied :)
                 for i=1,#word do
-                    if obj[x+i-1+(y*boardW)] then break end
-                    if obj[x+i-1+(y*boardW)]==nil and i==#word then found=true end 
+                    if obj[x+i-1+(y*boardW)] then if obj[x+i-1+(y*boardW)]~=string.sub(word,i,i) then break end end
+                    if (obj[x+i-1+(y*boardW)]==nil or obj[x+i-1+(y*boardW)]==string.sub(word,i,i)) and i==#word then found=true end 
                 end
                 tries = tries +1
                 if tries>maxTries then goto retry end
@@ -45,8 +45,8 @@ function newBoard()
                 y = rng(1,boardH-#word-1)
                 --check if the place is occupied :)
                 for i=1,#word do
-                    if obj[x+((y+i-1)*boardW)] then break end
-                    if obj[x+((y+i-1)*boardW)]==nil and i==#word then found=true end 
+                    if obj[x+((y+i-1)*boardW)] then if obj[x+((y+i-1)*boardW)]~=string.sub(word,i,i) then break end end
+                    if (obj[x+((y+i-1)*boardW)]==nil or obj[x+((y+i-1)*boardW)]==string.sub(word,i,i)) and i==#word then found=true end 
                 end
                 tries = tries +1
                 if tries>maxTries then goto retry end
@@ -64,8 +64,8 @@ function newBoard()
                 y = rng(1,boardH-#word-1)
                 --check if the place is occupied :)
                 for i=1,#word do
-                    if obj[x+i-1+((y+i-1)*boardW)] then break end
-                    if obj[x+i-1+((y+i-1)*boardW)]==nil and i==#word then found=true end 
+                    if obj[x+i-1+((y+i-1)*boardW)] then if obj[x+i-1+((y+i-1)*boardW)]~=string.sub(word,i,i) then break end end
+                    if (obj[x+i-1+((y+i-1)*boardW)]==nil or obj[x+i-1+((y+i-1)*boardW)]==string.sub(word,i,i)) and i==#word then found=true end 
                 end
                 tries = tries +1
                 if tries>maxTries then goto retry end

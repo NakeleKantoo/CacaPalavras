@@ -43,14 +43,15 @@ function drawWords()
     local maxW = math.min(textfont:getWidth(wowText)+20,screenw-50)
     local h = textfont:getHeight()+10
     if maxW==screenw-50 then
-        h = (h-10)*2+10
+        local scaleFact = math.ceil((textfont:getWidth(wowText)+20)/(screenw-50))
+        h = (h-10)*scaleFact+10
     end
     local x = screenw/2-maxW/2
     local y = 15
 
     --draw back
     love.graphics.setColor(1,1,1)
-    love.graphics.rectangle('fill',x,y,maxW-10,h,15)
+    love.graphics.rectangle('fill',x+5,y,maxW-5,h,15)
     y=y+5
     --love.graphics.setColor(0,0,0)
     love.graphics.printf(txt,textfont,x,y,maxW,"center")
@@ -94,7 +95,7 @@ function drawLine()
     end
 
     love.graphics.setLineWidth(blockW)
-    love.graphics.setColor(1,0.9,0.1,0.3)
+    love.graphics.setColor(currentColor)
     love.graphics.line(mx,my,x,y)
 end
 
@@ -136,7 +137,7 @@ function drawFoundLines()
         end
 
         love.graphics.setLineWidth(blockW)
-        love.graphics.setColor(1,0.9,0.1,0.3)
+        love.graphics.setColor(v.color)
         love.graphics.line(mx,my,x,y)
     end
 end

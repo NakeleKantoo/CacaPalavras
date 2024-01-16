@@ -1,10 +1,10 @@
 require("love")
 
-boardW = 10
+boardW = 15
 boardH = 10
 blockW = 35
 blockH = 35
-numWords = 5
+numWords = 20
 board = {}
 palavras = {}
 love.math.setRandomSeed(os.time())
@@ -17,6 +17,7 @@ directionClick = false
 destinyClick = 0
 achadas = {}
 lines = {}
+currentColor = {1,0.9,0}
 
 system = love.system.getOS()
 

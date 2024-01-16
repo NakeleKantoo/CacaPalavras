@@ -25,8 +25,14 @@ function love.update(dt)
             local word = checkWord(clicked,destinyClick,directionClick)
             for i,v in ipairs(palavras) do
                 if word==v then
-                    achadas[#achadas+1] = word
-                    lines[#lines+1] = {origin = clicked, destiny = destinyClick, direction = directionClick}   
+                    local already = false
+                    for k,w in ipairs(achadas) do
+                        if word==w then already=true; break end
+                    end
+                    if already==false then
+                        achadas[#achadas+1] = word
+                        lines[#lines+1] = {origin = clicked, destiny = destinyClick, direction = directionClick, color = currentColor}
+                    end
                 end
             end
 
@@ -50,6 +56,7 @@ function love.mousepressed(x,y)
     local block = checkWhichBlock(x,y)
     if block>0 then
         clicked=block
+        currentColor={rng(1,100)/100,rng(1,100)/100,rng(1,100)/100,rng(25,45)/100}
     end
 end
 
