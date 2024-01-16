@@ -11,3 +11,4 @@ rng = love.math.random
 screenw,screenh = love.graphics.getDimensions()
 font = love.graphics.newFont(30)
 textfont = love.graphics.newFont(25)
+clicked = 0

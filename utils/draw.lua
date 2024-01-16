@@ -17,7 +17,7 @@ function drawBoard()
         love.graphics.setColor(0,0,0)
         love.graphics.printf(string.upper(board[i]),font,x,y,blockW,"center")
         x=x+blockW+spacing
-        if i%10==0 then y=y+blockH+spacing; x=screenw/2-maxW/2 end
+        if i%boardW==0 then y=y+blockH+spacing; x=screenw/2-maxW/2 end
     end
 end
 
@@ -41,5 +41,25 @@ function drawWords()
     y=y+5
     love.graphics.setColor(0,0,0)
     love.graphics.printf(txt,textfont,x,y,maxW,"center")
+end
+
+function drawLine()
+    local mx,my = love.mouse.getPosition()
+    local spacing = 2
+    local maxW = (blockW+spacing)*boardW
+    local maxH = (blockH+spacing)*boardH
+    local x = screenw/2-maxW/2
+    local y = screenh/2-maxH/2
+    for i=1,#board do
+        if i == clicked then break end
+        x=x+blockW+spacing
+        if i%boardW==0 then y=y+blockH+spacing; x=screenw/2-maxW/2 end
+    end
+    x=x+(blockW/4)
+    y=y+(blockH/4)
+
+    love.graphics.setLineWidth(blockW)
+    love.graphics.setColor(1,0.9,0.1,0.3)
+    love.graphics.line(mx,my,x,y)
 end
 
