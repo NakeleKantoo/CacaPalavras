@@ -11,7 +11,6 @@ function love.load()
 end
 
 function love.update(dt)
-
     if love.mouse.isDown(1) then
         local mx, my = love.mouse.getPosition()
         local block = checkWhichBlock(mx,my)
@@ -50,6 +49,7 @@ function love.draw()
         drawLine()
     end
     drawFoundLines()
+    drawDock()
 end
 
 function love.mousepressed(x,y)

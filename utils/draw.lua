@@ -141,3 +141,34 @@ function drawFoundLines()
         love.graphics.line(mx,my,x,y)
     end
 end
+
+function drawDock()
+    local androidFactor = 0.25
+    if checkMobile() then androidFactor=0.15 end  
+    local buttonWidth = 256*androidFactor -- Largura dos botões (ajuste conforme necessário)
+    local buttonHeight = 256*androidFactor -- Altura dos botões (ajuste conforme necessário)
+    local minPadding = 10 -- Espaçamento entre os botões (ajuste conforme necessário)
+    local numButtons = #buttons
+
+     -- Calcula o total de largura ocupada pelos botões
+    -- Calcula a largura total ocupada pelos botões
+    local totalButtonsWidth = numButtons * buttonWidth
+
+    -- Calcula o padding necessário para centralizar os botões
+    local totalPadding = math.max((screenw - totalButtonsWidth) / (numButtons + 1), minPadding)
+
+    -- Calcula a posição x inicial para o primeiro botão
+    local xStart = (screenw - (totalButtonsWidth + totalPadding * (numButtons - 1))) / 2
+
+
+    -- Calcula a posição y dos botões colados na parte inferior da tela
+    local y = screenh - buttonHeight - 20
+
+    love.graphics.setColor(0, 0, 0, 0.5)
+    love.graphics.rectangle("fill", 0, y, screenw, screenh-y)
+    love.graphics.setColor(1,1,1,1)
+    for i, btn in ipairs(buttons) do
+        local x = xStart + (i - 1) * (buttonWidth + totalPadding)
+        love.graphics.draw(btn.img, x, y + 10, 0, androidFactor)
+    end
+end

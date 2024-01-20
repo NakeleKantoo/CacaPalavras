@@ -20,6 +20,23 @@ achadas = {}
 lines = {}
 currentColor = {1,0.9,0}
 
+gameState = {
+    paused = false,
+    inUI = {
+        winMenu = false,
+        newMenu = false,
+        configMenu = false,
+        storeMenu = false
+    }
+}
+
+buttons = {
+    {img=love.graphics.newImage("img/settings.png")},
+    {img=love.graphics.newImage("img/new.png")},
+    {img=love.graphics.newImage("img/market.png")}
+}
+
+
 system = love.system.getOS()
 
 function checkMobile()

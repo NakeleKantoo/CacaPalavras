@@ -19,8 +19,8 @@ function newBoard()
         local maxTries = 50
         if direction=="h" then
             --find a place for the word
-            local x = rng(1,boardW-#word)
-            local y = rng(1,boardH)
+            local x = rng(1,boardW-#word-1)
+            local y = rng(1,boardH-1)
             while found==false do
                 x = rng(1,boardW-#word-1)
                 y = rng(1,boardH-1)
