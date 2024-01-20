@@ -15,7 +15,7 @@ function drawBoard()
         love.graphics.setColor(1,1,1)
         love.graphics.rectangle('fill',x,y,blockW,blockH)
         love.graphics.setColor(0,0,0)
-        love.graphics.printf(string.upper(board[i]),font,x,y,blockW,"center")
+        love.graphics.printf(string.upper(board[i]),font,x,y+((blockH-spacing*2)/2-textfont:getHeight()/2),blockW,"center")
         x=x+blockW+spacing
         if i%boardW==0 then y=y+blockH+spacing; x=screenw/2-maxW/2 end
     end
@@ -51,10 +51,10 @@ function drawWords()
 
     --draw back
     love.graphics.setColor(1,1,1)
-    love.graphics.rectangle('fill',x+5,y,maxW-5,h,15)
+    love.graphics.rectangle('fill',x,y,maxW,h,15)
     y=y+5
     --love.graphics.setColor(0,0,0)
-    love.graphics.printf(txt,textfont,x,y,maxW,"center")
+    love.graphics.printf(txt,textfont,x+5,y,maxW-5,"center")
 end
 
 function drawLine()

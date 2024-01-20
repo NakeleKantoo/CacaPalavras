@@ -1,10 +1,11 @@
 require("love")
 
-boardW = 15
-boardH = 10
+boardW = 7
+boardH = 7
 blockW = 35
 blockH = 35
-numWords = 20
+numWords = 3
+interSpace = 2
 board = {}
 palavras = {}
 love.math.setRandomSeed(os.time())
@@ -35,9 +36,10 @@ if checkMobile() then
         if ty>tx then wait=false end
     end
     screenw, screenh = love.graphics.getDimensions()
-    scale = 0.8
-    blockW=blockW*scale
-    blockH=blockH*scale
+    local spacing = 30
+    blockW=(screenw-spacing-(interSpace*boardW))/boardW
+    blockH=blockW
+    scale = (boardW*(blockW+interSpace))/(screenw+spacing)
     font=font*scale
     textfont=textfont*scale
 end

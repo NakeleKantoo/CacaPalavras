@@ -88,7 +88,21 @@ end
 
 function checkVictory()
     if #achadas==#palavras then
-        print("venceu")
+        numWords=numWords+1
+        boardW=boardW+1
+        boardH=boardH+1
+        board = newBoard()
+        achadas={}
+        lines={}
+        if checkMobile() then
+            screenw, screenh = love.graphics.getDimensions()
+            local spacing = 30
+            blockW=(screenw-spacing-(interSpace*boardW))/boardW
+            blockH=blockW
+            scale = (boardW*(blockW+interSpace))/(screenw+spacing)
+            font=love.graphics.newFont(font:getHeight()*scale)
+            textfont=love.graphics.newFont(textfont:getHeight()*scale)
+        end
     end
 end
 
