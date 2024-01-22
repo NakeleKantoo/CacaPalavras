@@ -59,6 +59,9 @@ if checkMobile() then
     scale = (boardW*(blockW+interSpace))/(screenw+spacing)
     font=font*scale
     textfont=textfont*scale
+else
+    love.window.setFullscreen(true)
+    screenw, screenh = love.graphics.getDimensions()
 end
 
 font=love.graphics.newFont(font)

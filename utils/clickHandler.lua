@@ -17,11 +17,24 @@ function checkWhichBlock(mx,my)
 end
 
 function checkDirection(origin,destiny)
-    if destiny<origin then return false end
+    --if destiny<origin then return false end
 
-    if destiny-origin<boardW then return "h" end
-    if (destiny-origin)%boardW==0 then return "v" end
-    if (destiny-origin)%boardW<boardW then return "d" end
+    local y1,x1 = math.floor((origin-1)/boardW)+1, ((origin-1)%(boardW))+1
+    local y2,x2 = math.floor((destiny-1)/(boardW))+1, ((destiny-1)%(boardW))+1
+
+    if destiny==origin then return "h" end -- garante bonito no primeiro
+
+    if y1==y2 and destiny>origin then return "h" end
+    if x1==x2 and destiny>origin then return "v" end
+    if x1-y1==x2-y2 and destiny>origin then return "d" end
+    if x1+y1==x2+y2 and destiny>origin then return "sd" end
+
+
+    if y1==y2 then return "hb" end
+    if x1==x2 then return "vb" end
+    if x1-y1==x2-y2 then return "db" end
+    if x1+y1==x2+y2 then return "sdb" end
+
 
     return false
 
@@ -36,12 +49,24 @@ function checkWord(origin,destiny,dir)
         for i=origin,destiny do
             obj=obj..board[i]
         end
+    elseif directionClick=="hb" then
+        for i=destiny,origin do
+            obj=obj..board[i]
+        end
     elseif directionClick=="v" then
         for i=origin,destiny,boardW do
             obj=obj..board[i]
         end
+    elseif directionClick=="vb" then
+        for i=destiny,origin,boardW do
+            obj=obj..board[i]
+        end
     elseif directionClick=="d" then
         for i=origin,destiny,boardW+1 do
+            obj=obj..board[i]
+        end
+    elseif directionClick=="db" then
+        for i=destiny,origin,boardW+1 do
             obj=obj..board[i]
         end
     end

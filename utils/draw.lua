@@ -78,21 +78,7 @@ function drawLine()
         mx=mx+blockW+spacing
         if i%boardW==0 then my=my+blockH+spacing; mx=screenw/2-maxW/2 end
     end
-    if directionClick=="h" then
-        --x=x+(blockW/4)
-        y=y+(blockH/2)
-        my=my+(blockH/2)
-        mx=mx+blockW+spacing
-    elseif directionClick=="v" then
-        x=x+(blockW/2)
-        mx=mx+(blockW/2)
-        my=my+blockH+spacing
-    elseif directionClick=="d" then
-        x=x+(blockW/4)
-        y=y+(blockH/4)
-        mx=mx+blockW+spacing
-        my=my+blockH+spacing
-    end
+    x,y,mx,my = calcDir(x,y,mx,my,spacing,directionClick)
 
     love.graphics.setLineWidth(blockW)
     love.graphics.setColor(currentColor)
@@ -103,7 +89,7 @@ end
 function drawFoundLines()
     for i,v in ipairs(lines) do
 
-        local spacing = 2
+        local spacing = interSpace
         local maxW = (blockW+spacing)*boardW
         local maxH = (blockH+spacing)*boardH
         local x = screenw/2-maxW/2
@@ -120,21 +106,7 @@ function drawFoundLines()
             mx=mx+blockW+spacing
             if i%boardW==0 then my=my+blockH+spacing; mx=screenw/2-maxW/2 end
         end
-        if v.direction=="h" then
-            --x=x+(blockW/4)
-            y=y+(blockH/2)
-            my=my+(blockH/2)
-            mx=mx+blockW+spacing
-        elseif v.direction=="v" then
-            x=x+(blockW/2)
-            mx=mx+(blockW/2)
-            my=my+blockH+spacing
-        elseif v.direction=="d" then
-            x=x+(blockW/4)
-            y=y+(blockH/4)
-            mx=mx+blockW+spacing
-            my=my+blockH+spacing
-        end
+        x,y,mx,my = calcDir(x,y,mx,my,spacing,v.direction)
 
         love.graphics.setLineWidth(blockW)
         love.graphics.setColor(v.color)
@@ -171,4 +143,42 @@ function drawDock()
         local x = xStart + (i - 1) * (buttonWidth + totalPadding)
         love.graphics.draw(btn.img, x, y + 10, 0, androidFactor)
     end
+end
+
+
+function calcDir(x,y,mx,my,spacing,directionClick)
+    if directionClick=="h" then
+        y=y+(blockH/2)
+        my=my+(blockH/2)
+        mx=mx+blockW+spacing
+    elseif directionClick=="v" then
+        x=x+(blockW/2)
+        mx=mx+(blockW/2)
+        my=my+blockH+spacing
+    elseif directionClick=="d" then
+        x=x+(blockW/4)
+        y=y+(blockH/4)
+        mx=mx+blockW+spacing
+        my=my+blockH+spacing
+    elseif directionClick=="hb" then
+        x=x+(blockW+spacing)
+        y=y+(blockH/2)
+        my=my+(blockH/2)
+    elseif directionClick=="vb" then
+        x=x+(blockW/2)
+        y=y+blockH+spacing
+        mx=mx+(blockW/2)
+    elseif directionClick=="db" then
+        x=x+blockW+spacing
+        y=y+blockH+spacing
+    elseif directionClick=="sd" then
+        x=x+blockW+spacing-(blockW/4)
+        y=y+(blockH/4)
+        my=my+blockH+spacing
+    elseif directionClick=="sdb" then
+        x=x+(blockW/4)
+        y=y+blockH+spacing-(blockH/4)
+        mx=mx+blockW+spacing
+    end
+    return x,y,mx,my
 end
