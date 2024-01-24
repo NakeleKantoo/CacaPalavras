@@ -6,6 +6,7 @@ blockW = 35
 blockH = 35
 numWords = 3
 interSpace = 2
+difficulty = 2 --0=normal 1=inverse 2=more diagonals
 board = {}
 palavras = {}
 love.math.setRandomSeed(os.time())

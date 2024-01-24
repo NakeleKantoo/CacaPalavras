@@ -53,6 +53,7 @@ function checkWord(origin,destiny,dir)
         for i=destiny,origin do
             obj=obj..board[i]
         end
+        obj = invertWord(obj)
     elseif directionClick=="v" then
         for i=origin,destiny,boardW do
             obj=obj..board[i]
@@ -61,6 +62,7 @@ function checkWord(origin,destiny,dir)
         for i=destiny,origin,boardW do
             obj=obj..board[i]
         end
+        obj = invertWord(obj)
     elseif directionClick=="d" then
         for i=origin,destiny,boardW+1 do
             obj=obj..board[i]
@@ -69,6 +71,16 @@ function checkWord(origin,destiny,dir)
         for i=destiny,origin,boardW+1 do
             obj=obj..board[i]
         end
+        obj = invertWord(obj)
+    elseif directionClick=="sd" then
+        for i=origin,destiny,boardW-1 do
+            obj=obj..board[i]
+        end
+    elseif directionClick=="sdb" then
+        for i=destiny,origin,boardW-1 do
+            obj=obj..board[i]
+        end
+        obj = invertWord(obj)
     end
     return obj
 end

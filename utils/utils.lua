@@ -1,5 +1,10 @@
 local alfabeto = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"}
 
+local diffOrientations = {}
+table.insert(diffOrientations,0,{"h","h","h","v","v","d","sd"})
+table.insert(diffOrientations,1,{"h","h","v","v","d","d","sd"})
+table.insert(diffOrientations,2,{"h","h","v","v","v","d","d","d","sd","sd"})
+
 function newBoard()
     ::retry:: --dont get stuck with hopeless placements (unlucky ahh random shit)
     local words = getRandomWords(numWords)
@@ -10,7 +15,7 @@ function newBoard()
     local obj = {}
     local placing = false
     local wordPlaced = ""
-    local orientations = {"h","h","h","v","v","d"} --horizontal, vertical, diagonal
+    local orientations = diffOrientations[difficulty]--{"h","h","h","v","v","d"} --horizontal, vertical, diagonal
     for i=1,#words do
         local direction = orientations[rng(1,#orientations)]
         local word = words[i]
@@ -19,8 +24,9 @@ function newBoard()
         local maxTries = 50
         if direction=="h" then
             --find a place for the word
-            local x = rng(1,boardW-#word-1)
-            local y = rng(1,boardH-1)
+            local x = 0
+            local y = 0
+            if rng(1,100)<difficulty*10 then word=invertWord(word) end
             while found==false do
                 x = rng(1,boardW-#word-1)
                 y = rng(1,boardH-1)
@@ -38,8 +44,9 @@ function newBoard()
             end
         elseif direction=="v" then
             --find a place for the word
-            local x = rng(1,boardW-1)
-            local y = rng(1,boardH-#word-1)
+            local x = 0
+            local y = 0
+            if rng(1,100)<difficulty*10 then word=invertWord(word) end
             while found==false do
                 x = rng(1,boardW-1)
                 y = rng(1,boardH-#word-1)
@@ -57,8 +64,9 @@ function newBoard()
             end
         elseif direction=="d" then
             --find a place for the word
-            local x = rng(1,boardW-1)
-            local y = rng(1,boardH-#word-1)
+            local x = 0
+            local y = 0
+            if rng(1,100)<difficulty*5 then word=invertWord(word) end
             while found==false do
                 x = rng(1,boardW-#word-1)
                 y = rng(1,boardH-#word-1)
@@ -73,6 +81,26 @@ function newBoard()
             --ok now place the word
             for i=1,#word do
                 obj[x+i-1+((y+i-1)*boardW)]=string.sub(word,i,i)
+            end
+        elseif direction=="sd" then
+            --find a place for the word
+            local x = 0
+            local y = 0
+            if rng(1,100)<95-difficulty*5 then word=invertWord(word) end
+            while found==false do
+                x = rng(#word+1,boardW)
+                y = rng(1,boardH-#word-1)
+                --check if the place is occupied :)
+                for i=1,#word do
+                    if obj[x-i+1+((y+i-1)*boardW)] then if obj[x-i+1+((y+i-1)*boardW)]~=string.sub(word,i,i) then break end end
+                    if (obj[x-i+1+((y+i-1)*boardW)]==nil or obj[x-i+1+((y+i-1)*boardW)]==string.sub(word,i,i)) and i==#word then found=true end 
+                end
+                tries = tries +1
+                if tries>maxTries then goto retry end
+            end
+            --ok now place the word
+            for i=1,#word do
+                obj[x-i+1+((y+i-1)*boardW)]=string.sub(word,i,i)
             end
         end
     end
@@ -104,5 +132,13 @@ function checkVictory()
             textfont=love.graphics.newFont(textfont:getHeight()*scale)
         end
     end
+end
+
+function invertWord(word)
+    local obj = ""
+    for i=1,#word do
+        obj=obj..string.sub(word,#word-i+1,#word-i+1)
+    end
+    return obj
 end
 

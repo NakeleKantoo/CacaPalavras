@@ -6,7 +6,7 @@ function drawBackground()
 end
 
 function drawBoard()
-    local spacing = 2
+    local spacing = interSpace
     local maxW = (blockW+spacing)*boardW
     local maxH = (blockH+spacing)*boardH
     local x = screenw/2-maxW/2
@@ -15,7 +15,7 @@ function drawBoard()
         love.graphics.setColor(1,1,1)
         love.graphics.rectangle('fill',x,y,blockW,blockH)
         love.graphics.setColor(0,0,0)
-        love.graphics.printf(string.upper(board[i]),font,x,y+((blockH-spacing*2)/2-textfont:getHeight()/2),blockW,"center")
+        love.graphics.printf(string.upper(board[i]),font,x,y+((blockH-spacing*2)/2-textfont:getHeight()/2-blockH/10),blockW,"center")
         x=x+blockW+spacing
         if i%boardW==0 then y=y+blockH+spacing; x=screenw/2-maxW/2 end
     end
@@ -61,7 +61,7 @@ function drawLine()
 
     if directionClick==false then return false end
 
-    local spacing = 2
+    local spacing = interSpace
     local maxW = (blockW+spacing)*boardW
     local maxH = (blockH+spacing)*boardH
     local x = screenw/2-maxW/2
