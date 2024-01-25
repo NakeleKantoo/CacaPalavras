@@ -1,6 +1,6 @@
 function checkWhichBlock(mx,my)
     --check the collision
-    local spacing = 2
+    local spacing = interSpace
     local maxW = (blockW+spacing)*boardW
     local maxH = (blockH+spacing)*boardH
     local x = screenw/2-maxW/2
@@ -83,4 +83,36 @@ function checkWord(origin,destiny,dir)
         obj = invertWord(obj)
     end
     return obj
+end
+
+function checkButtons(mx,my)
+    local androidFactor = 0.25
+    if checkMobile() then androidFactor=0.15 end  
+    local buttonWidth = 256*androidFactor
+    local buttonHeight = 256*androidFactor
+    local minPadding = 10
+    local numButtons = #buttons
+    local totalButtonsWidth = numButtons * buttonWidth
+    local totalPadding = math.max((screenw - totalButtonsWidth) / (numButtons + 1), minPadding)
+    local xStart = (screenw - (totalButtonsWidth + totalPadding * (numButtons - 1))) / 2
+    local y = screenh - buttonHeight - 20
+    for i, btn in ipairs(buttons) do
+        local x = xStart + (i - 1) * (buttonWidth + totalPadding)
+        if mx >= x and mx <= x+buttonWidth and my >= y and my <= y+buttonHeight then
+            return i
+        end
+    end
+end
+
+function settingsCollision(mx,my)
+    local w = screenw/1.2
+    local h = screenh/1.5
+    local x = screenw/2-w/2
+    local y = screenh/2-h/2
+
+    local nx,ny,nw,nh = x+w/2-75,y+h/2-50,150,100
+    if mx >= nx and mx <= nx+nw and my >= ny and my <= ny+nh then
+        return "pressed"
+    end
+
 end

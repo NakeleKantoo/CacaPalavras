@@ -1,19 +1,19 @@
 require("love")
 
-boardW = 7
-boardH = 7
+boardW = 10
+boardH = 10
 blockW = 35
 blockH = 35
-numWords = 3
-interSpace = 2
-difficulty = 2 --0=normal 1=inverse 2=more diagonals
+numWords = 10
+interSpace = 0
+difficulty = 0 --0=normal 1=inverse 2=more diagonals
 board = {}
 palavras = {}
 love.math.setRandomSeed(os.time())
 rng = love.math.random
 screenw,screenh = love.graphics.getDimensions()
 font = 30
-textfont = 20
+textfont = 25
 clicked = 0
 directionClick = false
 destinyClick = 0
@@ -30,6 +30,20 @@ gameState = {
         storeMenu = false
     }
 }
+
+drawColors = {
+    gameBack = {0.211, 0.09, 0.368},
+
+    shading = {0.117, 0.0, 0.254, 0.65},
+    back = {0.403, 0.227, 0.713},--{0.514, 0.459, 0.961},
+    underline = {0.659, 0.435, 1},
+    button = {0.501, 0.337, 0.643},
+    buttonHighlight = {0.584, 0.454, 0.803},
+    buttonPress = {0.294, 0.192, 0.509},
+
+    foundWord = {1, 0.627, 0.239}--{1.0, 0.321, 0.321}
+}
+
 
 buttons = {
     {img=love.graphics.newImage("img/settings.png")},
@@ -57,7 +71,7 @@ if checkMobile() then
     local spacing = 30
     blockW=(screenw-spacing-(interSpace*boardW))/boardW
     blockH=blockW
-    scale = (boardW*(blockW+interSpace))/(screenw+spacing)
+    scale = blockH/1.5/font
     font=font*scale
     textfont=textfont*scale
 else
@@ -65,5 +79,5 @@ else
     screenw, screenh = love.graphics.getDimensions()
 end
 
-font=love.graphics.newFont(font)
-textfont=love.graphics.newFont(textfont)
+font=love.graphics.newFont("fonts/SpaceMono-Regular.ttf",font)
+textfont=love.graphics.newFont("fonts/SpaceMono-Regular.ttf",textfont)

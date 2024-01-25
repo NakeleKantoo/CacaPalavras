@@ -1,7 +1,7 @@
 require("love")
 
 function drawBackground()
-    love.graphics.setColor(0.3,0.3,0.55)
+    love.graphics.setColor(drawColors.gameBack)
     love.graphics.rectangle('fill',0,0,screenw,screenh)
 end
 
@@ -11,11 +11,16 @@ function drawBoard()
     local maxH = (blockH+spacing)*boardH
     local x = screenw/2-maxW/2
     local y = screenh/2-maxH/2
+
+    --shading :)
+    love.graphics.setColor(drawColors.shading)
+    love.graphics.rectangle('fill',x+10,y+10,maxW,maxH)
+
     for i=1,#board do
         love.graphics.setColor(1,1,1)
         love.graphics.rectangle('fill',x,y,blockW,blockH)
         love.graphics.setColor(0,0,0)
-        love.graphics.printf(string.upper(board[i]),font,x,y+((blockH-spacing*2)/2-textfont:getHeight()/2-blockH/10),blockW,"center")
+        love.graphics.printf(string.upper(board[i]),font,x,y+((blockH-spacing*2)/2-textfont:getHeight()/2-(blockH-spacing)/10),blockW,"center")
         x=x+blockW+spacing
         if i%boardW==0 then y=y+blockH+spacing; x=screenw/2-maxW/2 end
     end
@@ -24,13 +29,13 @@ end
 function drawWords()
     local txt = {}
     for i,v in ipairs(palavras) do
-        local color = {0,0,0}
-        for i=1,#achadas do if achadas[i]==v then color = {0,0.8,0} end end
+        local color = {1,1,1}
+        for i=1,#achadas do if achadas[i]==v then color = drawColors.foundWord end end
         if i==1 then
             txt[#txt+1] = color
             txt[#txt+1] = string.upper(v)
         else
-            txt[#txt+1] = {0,0,0}
+            txt[#txt+1] = {1,1,1}
             txt[#txt+1] = " - "
             txt[#txt+1] = color
             txt[#txt+1] = string.upper(v)
@@ -49,12 +54,16 @@ function drawWords()
     local x = screenw/2-maxW/2
     local y = 15
 
+    --draw shading
+    love.graphics.setColor(drawColors.shading)
+    love.graphics.rectangle('fill',x+5,y+5,maxW+5,h)
+
     --draw back
-    love.graphics.setColor(1,1,1)
-    love.graphics.rectangle('fill',x,y,maxW,h,15)
+    love.graphics.setColor(drawColors.back)
+    love.graphics.rectangle('fill',x,y,maxW+5,h)
     y=y+5
-    --love.graphics.setColor(0,0,0)
-    love.graphics.printf(txt,textfont,x+5,y,maxW-5,"center")
+
+    printf(txt,textfont,x+5,y,maxW-5,"center",{1,1,1},drawColors.shading,2)
 end
 
 function drawLine()
@@ -145,6 +154,32 @@ function drawDock()
     end
 end
 
+function drawSettings()
+    --grey out the background
+    love.graphics.setColor(0,0,0,0.25)
+    love.graphics.rectangle('fill',0,0,screenw,screenh)
+
+    --draw the back of menu
+
+    local w = screenw/1.2
+    local h = screenh/1.5
+    local x = screenw/2-w/2
+    local y = screenh/2-h/2
+
+    --shading
+    love.graphics.setColor(drawColors.shading)
+    love.graphics.rectangle("fill",x+15,y+15,w,h)
+
+    --actual back
+    love.graphics.setColor(drawColors.back)
+    love.graphics.rectangle("fill",x,y,w,h)
+
+    --text
+    printf("Configurações",font,x,y+15,w,"center",{1,1,1},drawColors.shading,5,drawColors.underline)
+
+    settingsOption("Teste","testando",w-30,x+15,y+h/2)
+end
+
 
 function calcDir(x,y,mx,my,spacing,directionClick)
     if directionClick=="h" then
@@ -181,4 +216,54 @@ function calcDir(x,y,mx,my,spacing,directionClick)
         mx=mx+blockW+spacing
     end
     return x,y,mx,my
+end
+
+function printf(text,font,x,y,limit,align,color,shading,shspace,underline)
+    if shading then
+        shspace=shspace or 3
+        love.graphics.setColor(shading)
+        love.graphics.printf(text,font,x+shspace,y+shspace,limit,align)
+    end
+    love.graphics.setColor(color)
+    love.graphics.printf(text,font,x,y,limit,align)
+    if underline then
+        local w = font:getWidth(text)
+        local ny = y+font:getHeight()
+        local nx = x-3
+        if align=="center" then nx = math.abs(limit/2+x-w/2)-3 end
+        love.graphics.setColor(underline)
+        love.graphics.rectangle("fill",nx,ny+3,w+6,5,2)
+    end
+end
+
+function drawButton(text,font,x,y,w,h,color,textcolor,shading,textshading)
+    if shading then
+        love.graphics.setColor(shading)
+        love.graphics.rectangle("fill",x+5,y+5,w,h)
+    end
+    love.graphics.setColor(color)
+    love.graphics.rectangle("fill",x,y,w,h)
+    local ty = y+h/2-font:getHeight()/2
+    printf(text,font,x,ty,w,"center",textcolor,textshading,2)
+end
+
+function settingsOption(text,value,width,x,y)
+    printf(text,font,x,y,width,"center",{1,1,1},drawColors.shading,2)
+    y=y+font:getHeight()+3
+    local size = math.max(font:getWidth("+"),font:getHeight())
+    buttonWrapper("-",x,y,size,size)
+    printf(value,textfont,x,y,width,"center",{1,1,1},drawColors.shading,2)
+    buttonWrapper("+",x+width-size,y,size,size)
+end
+
+function buttonWrapper(text,nx,ny,nw,nh)
+    local btnColor = drawColors.button
+    local mx,my=love.mouse.getPosition()
+    if mx >= nx and mx <= nx+nw and my >= ny and my <= ny+nh then
+        btnColor=drawColors.buttonHighlight
+        if love.mouse.isDown(1) then
+            btnColor=drawColors.buttonPress
+        end
+    end
+    drawButton(text,font,nx,ny,nw,nh,btnColor,{1,1,1},drawColors.shading,drawColors.shading)
 end

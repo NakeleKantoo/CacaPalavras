@@ -116,21 +116,7 @@ end
 
 function checkVictory()
     if #achadas==#palavras then
-        numWords=numWords+1
-        boardW=boardW+1
-        boardH=boardH+1
-        board = newBoard()
-        achadas={}
-        lines={}
-        if checkMobile() then
-            screenw, screenh = love.graphics.getDimensions()
-            local spacing = 30
-            blockW=(screenw-spacing-(interSpace*boardW))/boardW
-            blockH=blockW
-            scale = (boardW*(blockW+interSpace))/(screenw+spacing)
-            font=love.graphics.newFont(font:getHeight()*scale)
-            textfont=love.graphics.newFont(textfont:getHeight()*scale)
-        end
+        newGame(1,1)
     end
 end
 
@@ -140,5 +126,23 @@ function invertWord(word)
         obj=obj..string.sub(word,#word-i+1,#word-i+1)
     end
     return obj
+end
+
+function newGame(dw,ds)
+    numWords=numWords+dw
+    boardW=boardW+ds
+    boardH=boardH+ds
+    board = newBoard()
+    achadas={}
+    lines={}
+    if checkMobile() then
+        screenw, screenh = love.graphics.getDimensions()
+        local spacing = 30
+        blockW=(screenw-spacing-(interSpace*boardW))/boardW
+        blockH=blockW
+        scale = blockH/1.5/font:getHeight()
+        font=love.graphics.newFont("fonts/SpaceMono-Regular.ttf",font:getHeight()*scale)
+        textfont=love.graphics.newFont("fonts/SpaceMono-Regular.ttf",textfont:getHeight()*scale)
+    end
 end
 

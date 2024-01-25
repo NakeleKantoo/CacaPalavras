@@ -133,7 +133,22 @@ local todas = {
     "bola",
     "mochila",
     "escola",
-    "certeza"
+    "certeza",
+    "cheiro",
+    "visao",
+    "corda",
+    "sempre",
+    "amigo",
+    "visita",
+    "errado",
+    "justica",
+    "prisao",
+    "capivara",
+    "furao",
+    "girafa",
+    "leao",
+    "leopardo",
+    "guepardo"
 }
 
 function getRandomWords(num)
