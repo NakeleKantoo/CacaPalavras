@@ -51,6 +51,8 @@ buttons = {
     {img=love.graphics.newImage("img/market.png")}
 }
 
+settings,numSettings = loadSettings()
+
 
 system = love.system.getOS()
 

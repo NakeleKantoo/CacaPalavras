@@ -116,7 +116,7 @@ end
 
 function checkVictory()
     if #achadas==#palavras then
-        newGame(1,1)
+        newGame(0,0)
     end
 end
 

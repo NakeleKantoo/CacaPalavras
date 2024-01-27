@@ -1,4 +1,5 @@
 VERSION = "1.0"
+require("utils.settings")
 require("utils.vars")
 require("utils.draw")
 require("utils.utils")

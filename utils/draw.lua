@@ -160,8 +160,10 @@ function drawSettings()
     love.graphics.rectangle('fill',0,0,screenw,screenh)
 
     --draw the back of menu
+    local widthScale = 1.2
+    if checkMobile()==false then widthScale=2.5 end
 
-    local w = screenw/1.2
+    local w = screenw/widthScale
     local h = screenh/1.5
     local x = screenw/2-w/2
     local y = screenh/2-h/2
@@ -175,9 +177,13 @@ function drawSettings()
     love.graphics.rectangle("fill",x,y,w,h)
 
     --text
-    printf("Configurações",font,x,y+15,w,"center",{1,1,1},drawColors.shading,5,drawColors.underline)
+    printf("Configurações",font,x,y+15,w,"center",{1,1,1},drawColors.shading,3,drawColors.underline)
 
-    settingsOption("Teste","testando",w-30,x+15,y+h/2)
+    y=y+font:getHeight()*2+textfont:getHeight()+5
+    for i,v in pairs(settings) do
+        settingsOption(v.name,v.value,w-30,x+15,y)
+        y=y+font:getHeight()*2+textfont:getHeight()+5
+    end
 end
 
 
@@ -231,6 +237,9 @@ function printf(text,font,x,y,limit,align,color,shading,shspace,underline)
         local ny = y+font:getHeight()
         local nx = x-3
         if align=="center" then nx = math.abs(limit/2+x-w/2)-3 end
+        --shading :)
+        love.graphics.setColor(shading)
+        love.graphics.rectangle("fill",nx+3,ny+6,w+6,5,2)
         love.graphics.setColor(underline)
         love.graphics.rectangle("fill",nx,ny+3,w+6,5,2)
     end
@@ -248,8 +257,8 @@ function drawButton(text,font,x,y,w,h,color,textcolor,shading,textshading)
 end
 
 function settingsOption(text,value,width,x,y)
-    printf(text,font,x,y,width,"center",{1,1,1},drawColors.shading,2)
-    y=y+font:getHeight()+3
+    printf(text,font,x,y,width,"center",{1,1,1},drawColors.shading,2,drawColors.underline)
+    y=y+font:getHeight()+18
     local size = math.max(font:getWidth("+"),font:getHeight())
     buttonWrapper("-",x,y,size,size)
     printf(value,textfont,x,y,width,"center",{1,1,1},drawColors.shading,2)
