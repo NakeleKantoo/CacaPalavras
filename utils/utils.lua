@@ -146,3 +146,10 @@ function newGame(dw,ds)
     end
 end
 
+function generateColor()
+    ::tryagain:: --until get right
+    local r,g,b = rng(1,100)/100,rng(1,100)/100,rng(1,100)/100,rng(25,45)/100
+    if r+g+b>2 or r+g+b<0.5 then goto tryagain end
+    return {r,g,b,0.45}
+end
+

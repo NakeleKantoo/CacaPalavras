@@ -71,7 +71,7 @@ function love.mousepressed(x,y)
     local block = checkWhichBlock(x,y)
     if block>0 then
         clicked=block
-        currentColor={rng(1,100)/100,rng(1,100)/100,rng(1,100)/100,rng(25,45)/100}
+        currentColor=generateColor()
     elseif gameState.paused==false then
         local btn = checkButtons(x,y)
         if btn==1 then -- settings
