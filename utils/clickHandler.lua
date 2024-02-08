@@ -105,14 +105,26 @@ function checkButtons(mx,my)
 end
 
 function settingsCollision(mx,my)
-    local w = screenw/1.2
+    local widthScale = 1.2
+    if checkMobile()==false then widthScale=2.5 end
+    local w = screenw/widthScale
     local h = screenh/1.5
-    local x = screenw/2-w/2
+    local x = screenw/2-w/2+15
     local y = screenh/2-h/2
-
-    local nx,ny,nw,nh = x+w/2-75,y+h/2-50,150,100
-    if mx >= nx and mx <= nx+nw and my >= ny and my <= ny+nh then
-        return "pressed"
+    local width=w-30
+    y=y+font:getHeight()*2+textfont:getHeight()+5
+    y=y+font:getHeight()+18
+    for i,v in pairs(settings) do
+        x=screenw/2-w/2+15
+        local size = math.max(font:getWidth("+"),font:getHeight())
+        if mx >= x and mx <= x+size and my >= y and my <= y+size then
+            return "minus", i
+        end
+        x=x+width-size
+        if mx >= x and mx <= x+size and my >= y and my <= y+size then
+            return "plus", i
+        end
+        y=y+font:getHeight()*2+textfont:getHeight()+5
     end
 
 end

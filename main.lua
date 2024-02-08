@@ -72,6 +72,22 @@ function love.mousepressed(x,y)
     if block>0 then
         clicked=block
         currentColor=generateColor()
+    elseif gameState.inUI.configMenu then
+        local btn,what = settingsCollision(x,y)
+        local tab = settings[what]
+        if btn=="plus" then
+            if what=="hardSetting" then
+                switchNext(tab)
+            elseif what=="volume" then
+                stepSetting(tab,1)
+            end
+        elseif btn=="minus" then
+            if what=="hardSetting" then
+                switchPrior(tab)
+            elseif what=="volume" then
+                stepSetting(tab,-1)
+            end
+        end
     elseif gameState.paused==false then
         local btn = checkButtons(x,y)
         if btn==1 then -- settings
@@ -81,13 +97,6 @@ function love.mousepressed(x,y)
             newGame(0,0)
         elseif btn==3 then -- store (fuck)
 
-        end
-    else
-        if gameState.inUI.configMenu then
-            local btn = settingsCollision(x,y)
-            if btn=="pressed" then
-                
-            end
         end
     end
 end
