@@ -4,7 +4,7 @@ boardW = 10
 boardH = 10
 blockW = 35
 blockH = 35
-numWords = 1
+numWords = 0
 interSpace = 0
 difficulty = 0 --0=normal 1=inverse 2=more diagonals
 board = {}
@@ -35,7 +35,8 @@ gameState = {
 
 gameScore = {
     points = 0,
-    time = "00:00"
+    time = "00:00",
+    thisCoins = 0
 }
 
 drawColors = {

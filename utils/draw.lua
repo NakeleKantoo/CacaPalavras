@@ -265,53 +265,69 @@ function settingsOption(text,value,width,x,y)
     buttonWrapper("+",x+width-size,y,size,size)
 end
 
-function buttonWrapper(text,nx,ny,nw,nh)
+function buttonWrapper(text,nx,ny,nw,nh,fn,...)
     local btnColor = drawColors.button
     local mx,my=love.mouse.getPosition()
     if mx >= nx and mx <= nx+nw and my >= ny and my <= ny+nh then
         btnColor=drawColors.buttonHighlight
         if love.mouse.isDown(1) then
             btnColor=drawColors.buttonPress
+            fn(...)
         end
     end
     drawButton(text,font,nx,ny,nw,nh,btnColor,{1,1,1},drawColors.shading,drawColors.shading)
 end
 
 function drawVictory()
-        --grey out the background
-        love.graphics.setColor(0,0,0,0.25)
-        love.graphics.rectangle('fill',0,0,screenw,screenh)
+    --grey out the background
+    love.graphics.setColor(0,0,0,0.25)
+    love.graphics.rectangle('fill',0,0,screenw,screenh)
+
+    --draw the back of menu
+    local widthScale = 1.2
+    if checkMobile()==false then widthScale=2.5 end
+
+    local heightScale = 2.5
+    if checkMobile()==false then heightScale=3 end
+
+    local w = screenw/widthScale
+    local h = screenh/heightScale
+    local x = screenw/2-w/2
+    local y = screenh/2-h/2
+
+    --shading
+    love.graphics.setColor(drawColors.shading)
+    love.graphics.rectangle("fill",x+15,y+15,w,h)
+
+    --actual back
+    love.graphics.setColor(drawColors.back)
+    love.graphics.rectangle("fill",x,y,w,h)
+
+    --text
+    printf("Vitória!",font,x,y+15,w,"center",{1,1,1},drawColors.shading,3,drawColors.underline)
+    x=x+5
+    w=w-10
+    y=y+font:getHeight()+15+15
+    printf("Pontos:",font,x,y+15,w,"left",{1,1,1},drawColors.shading,3)
+    printf(gameScore.points,font,x,y+15,w,"right",{1,1,1},drawColors.shading,3)
+    y=y+font:getHeight()
+    printf("Tempo:",font,x,y+15,w,"left",{1,1,1},drawColors.shading,3)
+    printf(gameScore.time,font,x,y+15,w,"right",{1,1,1},drawColors.shading,3)
+    y=y+font:getHeight()
+    printf("Moedas:",font,x,y+15,w,"left",{1,1,1},drawColors.shading,3)
+    printf(gameScore.thisCoins,font,x,y+15,w,"right",{1,1,1},drawColors.shading,3)
     
-        --draw the back of menu
-        local widthScale = 1.2
-        if checkMobile()==false then widthScale=2.5 end
-    
-        local w = screenw/widthScale
-        local h = screenh/1.8
-        local x = screenw/2-w/2
-        local y = screenh/2-h/2
-    
-        --shading
-        love.graphics.setColor(drawColors.shading)
-        love.graphics.rectangle("fill",x+15,y+15,w,h)
-    
-        --actual back
-        love.graphics.setColor(drawColors.back)
-        love.graphics.rectangle("fill",x,y,w,h)
-    
-        --text
-        printf("Vitória!",font,x,y+15,w,"center",{1,1,1},drawColors.shading,3,drawColors.underline)
-        x=x+5
-        w=w-10
-        y=y+font:getHeight()+15+15
-        printf("Pontos:",font,x,y+15,w,"left",{1,1,1},drawColors.shading,3)
-        printf(gameScore.points,font,x,y+15,w,"right",{1,1,1},drawColors.shading,3)
-        y=y+font:getHeight()+15+15
-        printf("Tempo:",font,x,y+15,w,"left",{1,1,1},drawColors.shading,3)
-        printf(gameScore.time,font,x,y+15,w,"right",{1,1,1},drawColors.shading,3)
-        y=y+font:getHeight()+15+15
-        printf("banana:",font,x,y+15,w,"left",{1,1,1},drawColors.shading,3)
-        printf("nenhuma :(",font,x,y+15,w,"right",{1,1,1},drawColors.shading,3)
+    --reset vars
+    x=x-5
+    w=w+10
+
+    --button dimensions
+    local btnW = math.max(w/20,font:getWidth("Novo Jogo")+20)
+    local btnH = math.max(h/10,font:getHeight()+20)
+    --button for new game
+    x = screenw/2-btnW/2
+    y = screenh/2+h/2-15-btnH
+    buttonWrapper("Novo Jogo",x,y,btnW,btnH,newGame,0,0)
 end
 
 function drawTime()

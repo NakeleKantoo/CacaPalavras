@@ -20,8 +20,8 @@ function love.update(dt)
     end
     updateParticles(dt)
 
-    local mx, my = love.mouse.getPosition()
     if love.mouse.isDown(1) then
+        local mx, my = love.mouse.getPosition()
         local block = checkWhichBlock(mx,my)
         if block>0 then
             directionClick = checkDirection(clicked,block)
@@ -33,28 +33,14 @@ function love.update(dt)
             local word = checkWord(clicked,destinyClick,directionClick)
             for i,v in ipairs(palavras) do
                 if word==v then
-                    local already = false
-                    for k,w in ipairs(achadas) do
-                        if word==w or invertWord(word)==w then already=true; break end
-                    end
+                    local already = isThisWordFound(word)
                     if already==false then
-                        achadas[#achadas+1] = word
-                        lines[#lines+1] = {origin = clicked, destiny = destinyClick, direction = directionClick, color = currentColor}
-                        local points = (50*word:len())-(math.floor(getSeconds()/15)-math.floor(word:len()*0.75))
-                        table.insert(particles,{text="+"..points,color={0,1,0},posx=mx,posy=my,ttl=1.5})
-                        gameScore.points=gameScore.points+points
+                        foundWord(word)
                     end
                 elseif invertWord(word) == v then
-                    local already = false
-                    for k,w in ipairs(achadas) do
-                        if word==w or invertWord(word)==w then already=true; break end
-                    end
+                    local already = isThisWordFound(word)                    
                     if already==false then
-                        achadas[#achadas+1] = invertWord(word)
-                        lines[#lines+1] = {origin = clicked, destiny = destinyClick, direction = directionClick, color = currentColor}
-                        local points = math.floor((50/getSeconds())*10*word:len())
-                        table.insert(particles,{text="+"..points,color={0,1,0},posx=mx,posy=my,ttl=1.5})
-                        gameScore.points=gameScore.points+points
+                        foundWord(invertWord(word))
                     end
                 end
             end

@@ -146,6 +146,11 @@ function newGame(dw,ds)
         font=love.graphics.newFont("fonts/SpaceMono-Regular.ttf",font:getHeight()*scale)
         textfont=love.graphics.newFont("fonts/SpaceMono-Regular.ttf",textfont:getHeight()*scale)
     end
+    gameState.paused=false
+    gameState.inUI.winMenu=false
+    gameState.inUI.configMenu=false
+    gameState.inUI.storeMenu=false
+    particles={}
 end
 
 function generateColor()
@@ -187,9 +192,27 @@ function updateParticles(dt)
         local particle = particles[i]
         if particle.ttl<=0 then
             table.remove(particles,i)
+            return false
         else
             particle.ttl=particle.ttl-dt
             particle.posy=particle.posy-50*dt
         end
     end
+end
+
+function foundWord(word)
+    local mx, my = love.mouse.getPosition()
+    achadas[#achadas+1] = word
+    lines[#lines+1] = {origin = clicked, destiny = destinyClick, direction = directionClick, color = currentColor}
+    local points = math.floor((50*word:len())-(math.floor(getSeconds()/15)-math.floor(word:len()*0.75)))
+    table.insert(particles,{text="+"..points,color={0,1,0},posx=mx,posy=my,ttl=1.5})
+    gameScore.points=gameScore.points+points
+    gameScore.thisCoins=math.max(15,math.floor(gameScore.points/500*(difficulty+1)))
+end
+
+function isThisWordFound(word)
+    for k,w in ipairs(achadas) do
+        if word==w or invertWord(word)==w then return true end
+    end
+    return false
 end
