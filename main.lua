@@ -12,8 +12,16 @@ function love.load()
 end
 
 function love.update(dt)
+    if gameState.paused==false then deltaTime=deltaTime+dt end --dt only counts when in game
+    --dt checking
+    if deltaTime>=1 then
+        gameScore.time=increaseSecond()
+        deltaTime=deltaTime-1
+    end
+    updateParticles(dt)
+
+    local mx, my = love.mouse.getPosition()
     if love.mouse.isDown(1) then
-        local mx, my = love.mouse.getPosition()
         local block = checkWhichBlock(mx,my)
         if block>0 then
             directionClick = checkDirection(clicked,block)
@@ -32,6 +40,9 @@ function love.update(dt)
                     if already==false then
                         achadas[#achadas+1] = word
                         lines[#lines+1] = {origin = clicked, destiny = destinyClick, direction = directionClick, color = currentColor}
+                        local points = (50*word:len())-(math.floor(getSeconds()/15)-math.floor(word:len()*0.75))
+                        table.insert(particles,{text="+"..points,color={0,1,0},posx=mx,posy=my,ttl=1.5})
+                        gameScore.points=gameScore.points+points
                     end
                 elseif invertWord(word) == v then
                     local already = false
@@ -41,6 +52,9 @@ function love.update(dt)
                     if already==false then
                         achadas[#achadas+1] = invertWord(word)
                         lines[#lines+1] = {origin = clicked, destiny = destinyClick, direction = directionClick, color = currentColor}
+                        local points = math.floor((50/getSeconds())*10*word:len())
+                        table.insert(particles,{text="+"..points,color={0,1,0},posx=mx,posy=my,ttl=1.5})
+                        gameScore.points=gameScore.points+points
                     end
                 end
             end
@@ -60,10 +74,13 @@ function love.draw()
     end
     drawFoundLines()
     drawDock()
+    drawTime()
+    drawParticles()
     
 
     --UI drawings
     if gameState.inUI.configMenu then drawSettings() end
+    if gameState.inUI.winMenu then drawVictory() end
 end
 
 function love.mousepressed(x,y)

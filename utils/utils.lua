@@ -116,7 +116,9 @@ end
 
 function checkVictory()
     if #achadas==#palavras then
-        newGame(0,0)
+        --newGame(0,0)
+        gameState.paused=true
+        gameState.inUI.winMenu=true
     end
 end
 
@@ -153,3 +155,41 @@ function generateColor()
     return {r,g,b,0.45}
 end
 
+function increaseSecond()
+    local time = split(gameScore.time,":")
+    local secs = tonumber(time[2])
+    local mins = tonumber(time[1])
+    secs=secs+1
+    if secs>=60 then secs=secs-60;mins=mins+1 end
+    if secs<10 then secs="0"..tostring(secs) end
+    if mins<10 then mins="0"..tostring(mins) end
+    return mins..":"..secs
+end
+
+function getSeconds()
+    local time = split(gameScore.time,":")
+    local secs = tonumber(time[2])
+    local mins = tonumber(time[1])
+    return mins*60+secs
+end
+
+function split(str, sep)
+    local result = {}
+    local regex = ("([^%s]+)"):format(sep)
+    for each in str:gmatch(regex) do
+       table.insert(result, each)
+    end
+    return result
+end
+
+function updateParticles(dt)
+    for i=1,#particles do
+        local particle = particles[i]
+        if particle.ttl<=0 then
+            table.remove(particles,i)
+        else
+            particle.ttl=particle.ttl-dt
+            particle.posy=particle.posy-50*dt
+        end
+    end
+end

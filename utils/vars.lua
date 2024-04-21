@@ -4,7 +4,7 @@ boardW = 10
 boardH = 10
 blockW = 35
 blockH = 35
-numWords = 10
+numWords = 1
 interSpace = 0
 difficulty = 0 --0=normal 1=inverse 2=more diagonals
 board = {}
@@ -20,6 +20,8 @@ destinyClick = 0
 achadas = {}
 lines = {}
 currentColor = {1,0.9,0}
+coins = 0
+deltaTime = 0
 
 gameState = {
     paused = false,
@@ -29,6 +31,11 @@ gameState = {
         configMenu = false,
         storeMenu = false
     }
+}
+
+gameScore = {
+    points = 0,
+    time = "00:00"
 }
 
 drawColors = {
@@ -44,6 +51,7 @@ drawColors = {
     foundWord = {1, 0.627, 0.239}--{1.0, 0.321, 0.321}
 }
 
+particles = {} -- (text,color,posx,posy,ttl)
 
 buttons = {
     {img=love.graphics.newImage("img/settings.png")},

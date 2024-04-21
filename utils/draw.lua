@@ -276,3 +276,66 @@ function buttonWrapper(text,nx,ny,nw,nh)
     end
     drawButton(text,font,nx,ny,nw,nh,btnColor,{1,1,1},drawColors.shading,drawColors.shading)
 end
+
+function drawVictory()
+        --grey out the background
+        love.graphics.setColor(0,0,0,0.25)
+        love.graphics.rectangle('fill',0,0,screenw,screenh)
+    
+        --draw the back of menu
+        local widthScale = 1.2
+        if checkMobile()==false then widthScale=2.5 end
+    
+        local w = screenw/widthScale
+        local h = screenh/1.8
+        local x = screenw/2-w/2
+        local y = screenh/2-h/2
+    
+        --shading
+        love.graphics.setColor(drawColors.shading)
+        love.graphics.rectangle("fill",x+15,y+15,w,h)
+    
+        --actual back
+        love.graphics.setColor(drawColors.back)
+        love.graphics.rectangle("fill",x,y,w,h)
+    
+        --text
+        printf("Vitória!",font,x,y+15,w,"center",{1,1,1},drawColors.shading,3,drawColors.underline)
+        x=x+5
+        w=w-10
+        y=y+font:getHeight()+15+15
+        printf("Pontos:",font,x,y+15,w,"left",{1,1,1},drawColors.shading,3)
+        printf(gameScore.points,font,x,y+15,w,"right",{1,1,1},drawColors.shading,3)
+        y=y+font:getHeight()+15+15
+        printf("Tempo:",font,x,y+15,w,"left",{1,1,1},drawColors.shading,3)
+        printf(gameScore.time,font,x,y+15,w,"right",{1,1,1},drawColors.shading,3)
+        y=y+font:getHeight()+15+15
+        printf("banana:",font,x,y+15,w,"left",{1,1,1},drawColors.shading,3)
+        printf("nenhuma :(",font,x,y+15,w,"right",{1,1,1},drawColors.shading,3)
+end
+
+function drawTime()
+    local androidFactor = 0.25
+    if checkMobile() then androidFactor=0.15 end  
+    local buttonHeight = 256*androidFactor -- Altura dos botões (ajuste conforme necessário)
+    -- Calcula a posição y dos botões colados na parte inferior da tela
+    local textHeight = textfont:getHeight()+15
+    local y = screenh - buttonHeight - 20 - textHeight - 15
+    love.graphics.setColor(0, 0, 0, 0.5)
+    love.graphics.rectangle("fill", -150, y, textfont:getWidth(gameScore.time)+150+10, textHeight,10)
+    love.graphics.setColor(1,1,1,1)
+    love.graphics.printf(gameScore.time,textfont,0,y+7.5,textfont:getWidth(gameScore.time)+5,"center")
+end
+
+function drawParticles()
+    for i=1,#particles do
+        local particle = particles[i]
+        love.graphics.setColor(particle.color)
+        love.graphics.print(particle.text,textfont,particle.posx,particle.posy)
+        --shadow
+        love.graphics.setColor(particle.color[1]/1.5,particle.color[2]/1.5,particle.color[3]/1.5)
+        love.graphics.print(particle.text,textfont,particle.posx+2,particle.posy+2)
+    end
+end
+
+--okay done for today
