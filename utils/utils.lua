@@ -4,6 +4,7 @@ local diffOrientations = {}
 table.insert(diffOrientations,0,{"h","h","h","v","v","d","sd"})
 table.insert(diffOrientations,1,{"h","h","v","v","d","d","sd"})
 table.insert(diffOrientations,2,{"h","h","v","v","v","d","d","d","sd","sd"})
+table.insert(diffOrientations,3,{"h","h","v","v","v","d","d","d","sd","sd","sd"})
 
 function newBoard()
     ::retry:: --dont get stuck with hopeless placements (unlucky ahh random shit)

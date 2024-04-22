@@ -19,3 +19,7 @@ function playMenu()
     sources[#sources+1] = love.audio.newSource(sfx.menu)
     love.audio.play(sources[#sources])
 end
+
+function changeVolume()
+    love.audio.setVolume(settings.volume.value/100)
+end

@@ -2,9 +2,10 @@ function loadSettings()
     local obj = {
         hardSetting = {id=1,value="Médio",name="Dificuldade",possible=loadPossibleDifficulties()},
         volume = {id=2,value=100,name="Volume",min=0,max=100,step=5},
-        theme = {id=3,value="Roxo",name="Tema",possible=loadPossibleThemes()}
+        theme = {id=3,value="Roxo",name="Tema",possible=loadPossibleThemes()},
+        size = {id=4,value="10x10",name="Tamanho",possible=loadPossibleSizes()}
     }
-    return obj,3
+    return obj,4
 end
 
 function loadPossibleDifficulties()
@@ -14,6 +15,17 @@ function loadPossibleDifficulties()
         ["Difícil"] = 2,
         ["Desafiador"] = 3,
         keys = {"Fácil","Médio","Difícil","Desafiador"}
+    }
+    return obj
+end
+
+function loadPossibleSizes()
+    local obj = {
+        ["10x10"] = 10,
+        ["15x15"] = 15,
+        ["20x20"] = 20,
+        ["25x25"] = 25,
+        keys = {"10x10","15x15","20x20","25x25"}
     }
     return obj
 end
@@ -30,7 +42,7 @@ function loadPossibleThemes()
             buttonPress = {0.294, 0.192, 0.509},
             foundWord = {1, 0.627, 0.239}
         },
-        ["Azul"] = {
+        ["Azul"] = { --TODO
             gameBack = {0.211, 0.09, 0.368},
             shading = {0.117, 0.0, 0.254, 0.65},
             back = {0.403, 0.227, 0.713},
@@ -40,7 +52,7 @@ function loadPossibleThemes()
             buttonPress = {0.294, 0.192, 0.509},
             foundWord = {1, 0.627, 0.239}
         },
-        ["Vermelho"] = {
+        ["Vermelho"] = { --TODO
             gameBack = {0.211, 0.09, 0.368},
             shading = {0.117, 0.0, 0.254, 0.65},
             back = {0.403, 0.227, 0.713},
@@ -50,7 +62,7 @@ function loadPossibleThemes()
             buttonPress = {0.294, 0.192, 0.509},
             foundWord = {1, 0.627, 0.239}
         },
-        ["Verde"] = {
+        ["Verde"] = { --TODO
             gameBack = {0.211, 0.09, 0.368},
             shading = {0.117, 0.0, 0.254, 0.65},
             back = {0.403, 0.227, 0.713},
@@ -61,16 +73,16 @@ function loadPossibleThemes()
             foundWord = {1, 0.627, 0.239}
         },
         ["Escuro"] = {
-            gameBack = {0.211, 0.09, 0.368},
-            shading = {0.117, 0.0, 0.254, 0.65},
-            back = {0.403, 0.227, 0.713},
-            underline = {0.659, 0.435, 1},
-            button = {0.501, 0.337, 0.643},
-            buttonHighlight = {0.584, 0.454, 0.803},
-            buttonPress = {0.294, 0.192, 0.509},
+            gameBack = {0.15,0.15,0.15},
+            shading = {0.1,0.1,0.1, 0.65},
+            back = {0.2,0.2,0.2},
+            underline = {1,1,1},
+            button = {0.6,0.6,0.6},
+            buttonHighlight = {0.8,0.8,0.8},
+            buttonPress = {0.55,0.55,0.55},
             foundWord = {1, 0.627, 0.239}
         },
-        ["Laranja"] = {
+        ["Laranja"] = { --TODO
             gameBack = {0.211, 0.09, 0.368},
             shading = {0.117, 0.0, 0.254, 0.65},
             back = {0.403, 0.227, 0.713},
@@ -102,6 +114,7 @@ function switchNext(tab)
             break
         end
     end
+    changeWrapper(tab)
 end
 
 function switchPrior(tab)
@@ -117,6 +130,7 @@ function switchPrior(tab)
             break
         end
     end
+    changeWrapper(tab)
 end
 
 function stepSetting(tab,signal)
@@ -136,4 +150,18 @@ function stepWrapper(tab)
         end
     end
     stepSetting(stg,tab[2])
+    if stg.name=="Volume" then
+        changeVolume()
+    end
+end
+
+function changeWrapper(tab)
+    --handle the changes for every config
+    local n = tab.name
+    if n=="Dificuldade" then
+        --change difficulty
+        difficulty = tab.possible[tab.value]
+    elseif n=="Tema" then
+        drawColors = tab.possible[tab.value]
+    end
 end

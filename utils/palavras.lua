@@ -189,7 +189,7 @@ local todas = {
 
 function getRandomWords(num)
     local obj = {}
-    while #obj<num+1 do
+    while #obj<num do
         local index = rng(1,#todas)
         local word = todas[index]
         local found = false

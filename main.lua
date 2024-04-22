@@ -10,6 +10,7 @@ require("utils.json")
 
 function love.load()
     board = newBoard()
+    changeVolume()
     --for i=1,#board do print(board[i]) end
 end
 

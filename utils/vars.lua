@@ -4,9 +4,9 @@ boardW = 10
 boardH = 10
 blockW = 35
 blockH = 35
-numWords = 0
+numWords = 10
 interSpace = 0
-difficulty = 0 --0=normal 1=inverse 2=more diagonals
+difficulty = 0 --0=normal 1=inverse 2=more diagonals 3=even more diagonals
 board = {}
 palavras = {}
 love.math.setRandomSeed(os.time())
