@@ -28,6 +28,7 @@ function love.update(dt)
             destinyClick=block
         end
     else
+        pressed=false
         if clicked>0 then
             --check word
             local word = checkWord(clicked,destinyClick,directionClick)
@@ -89,8 +90,14 @@ function love.mousepressed(x,y)
         if gameState.inUI.configMenu then
             local btn = settingsCollision(x,y)
             if btn=="pressed" then
-                
+            elseif btn=="outside" then
+                gameState.paused=false
+                gameState.inUI.configMenu=false
             end
+        end
+        if gameState.inUI.winMenu then
+            local btn = winCollision(x,y)
+            gameState.inUI.winMenu=false
         end
     end
 end

@@ -180,48 +180,12 @@ function drawSettings()
     printf("Configurações",font,x,y+15,w,"center",{1,1,1},drawColors.shading,3,drawColors.underline)
 
     y=y+font:getHeight()*2+textfont:getHeight()+5
-    for i,v in pairs(settings) do
-        settingsOption(v.name,v.value,w-30,x+15,y)
+    for i=1,numSettings do
+        v={}
+        for k,vl in pairs(settings) do if i==vl.id then v=vl end end
+        settingsOption(v,w-30,x+15,y)
         y=y+font:getHeight()*2+textfont:getHeight()+5
     end
-end
-
-
-function calcDir(x,y,mx,my,spacing,directionClick)
-    if directionClick=="h" then
-        y=y+(blockH/2)
-        my=my+(blockH/2)
-        mx=mx+blockW+spacing
-    elseif directionClick=="v" then
-        x=x+(blockW/2)
-        mx=mx+(blockW/2)
-        my=my+blockH+spacing
-    elseif directionClick=="d" then
-        x=x+(blockW/4)
-        y=y+(blockH/4)
-        mx=mx+blockW+spacing
-        my=my+blockH+spacing
-    elseif directionClick=="hb" then
-        x=x+(blockW+spacing)
-        y=y+(blockH/2)
-        my=my+(blockH/2)
-    elseif directionClick=="vb" then
-        x=x+(blockW/2)
-        y=y+blockH+spacing
-        mx=mx+(blockW/2)
-    elseif directionClick=="db" then
-        x=x+blockW+spacing
-        y=y+blockH+spacing
-    elseif directionClick=="sd" then
-        x=x+blockW+spacing-(blockW/4)
-        y=y+(blockH/4)
-        my=my+blockH+spacing
-    elseif directionClick=="sdb" then
-        x=x+(blockW/4)
-        y=y+blockH+spacing-(blockH/4)
-        mx=mx+blockW+spacing
-    end
-    return x,y,mx,my
 end
 
 function printf(text,font,x,y,limit,align,color,shading,shspace,underline)
@@ -256,13 +220,30 @@ function drawButton(text,font,x,y,w,h,color,textcolor,shading,textshading)
     printf(text,font,x,ty,w,"center",textcolor,textshading,2)
 end
 
-function settingsOption(text,value,width,x,y)
+function settingsOption(settingTable,width,x,y)
+    local text = settingTable.name
+    local value = settingTable.value
+    local fnFWR = nil
+    local fnBCW = nil
+    local argsFWR = nil
+    local argsBCW = nil
     printf(text,font,x,y,width,"center",{1,1,1},drawColors.shading,2,drawColors.underline)
     y=y+font:getHeight()+18
+    if settingTable.step then
+        fnFWR = stepWrapper
+        argsFWR = {settingTable.name,1}
+        fnBCW = stepWrapper
+        argsBCW = {settingTable.name,-1}
+    else
+        fnFWR = switchNext
+        argsFWR = settingTable
+        fnBCW = switchPrior
+        argsBCW = settingTable
+    end
     local size = math.max(font:getWidth("+"),font:getHeight())
-    buttonWrapper("-",x,y,size,size)
+    buttonWrapper("-",x,y,size,size,fnBCW,argsBCW)
     printf(value,textfont,x,y,width,"center",{1,1,1},drawColors.shading,2)
-    buttonWrapper("+",x+width-size,y,size,size)
+    buttonWrapper("+",x+width-size,y,size,size,fnFWR,argsFWR)
 end
 
 function buttonWrapper(text,nx,ny,nw,nh,fn,...)
@@ -272,7 +253,8 @@ function buttonWrapper(text,nx,ny,nw,nh,fn,...)
         btnColor=drawColors.buttonHighlight
         if love.mouse.isDown(1) then
             btnColor=drawColors.buttonPress
-            fn(...)
+            if pressed==false then fn(...) end
+            pressed=true
         end
     end
     drawButton(text,font,nx,ny,nw,nh,btnColor,{1,1,1},drawColors.shading,drawColors.shading)
@@ -353,5 +335,3 @@ function drawParticles()
         love.graphics.print(particle.text,textfont,particle.posx+2,particle.posy+2)
     end
 end
-
---okay done for today

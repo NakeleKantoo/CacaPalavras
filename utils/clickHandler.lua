@@ -105,14 +105,38 @@ function checkButtons(mx,my)
 end
 
 function settingsCollision(mx,my)
-    local w = screenw/1.2
+    local widthScale = 1.2
+    if checkMobile()==false then widthScale=2.5 end
+
+    local w = screenw/widthScale
     local h = screenh/1.5
     local x = screenw/2-w/2
     local y = screenh/2-h/2
 
-    local nx,ny,nw,nh = x+w/2-75,y+h/2-50,150,100
-    if mx >= nx and mx <= nx+nw and my >= ny and my <= ny+nh then
+    if mx >= x and mx <= x+w and my >= y and my <= y+h then
         return "pressed"
+    else
+        return "outside"
+    end
+
+end
+
+function winCollision(mx,my)
+    local widthScale = 1.2
+    if checkMobile()==false then widthScale=2.5 end
+
+    local heightScale = 2.5
+    if checkMobile()==false then heightScale=3 end
+
+    local w = screenw/widthScale
+    local h = screenh/heightScale
+    local x = screenw/2-w/2
+    local y = screenh/2-h/2
+
+    if mx >= x and mx <= x+w and my >= y and my <= y+h then
+        return "pressed"
+    else
+        return "outside"
     end
 
 end

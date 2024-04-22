@@ -23,6 +23,8 @@ currentColor = {1,0.9,0}
 coins = 0
 deltaTime = 0
 
+pressed = false
+
 gameState = {
     paused = false,
     inUI = {

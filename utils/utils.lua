@@ -151,6 +151,7 @@ function newGame(dw,ds)
     gameState.inUI.configMenu=false
     gameState.inUI.storeMenu=false
     particles={}
+    adjustGameScore()
 end
 
 function generateColor()
@@ -215,4 +216,48 @@ function isThisWordFound(word)
         if word==w or invertWord(word)==w then return true end
     end
     return false
+end
+
+function adjustGameScore() --add stats later
+    gameScore.points=0
+    coins = coins+gameScore.thisCoins
+    gameScore.time="00:00"
+end
+
+
+function calcDir(x,y,mx,my,spacing,directionClick)
+    if directionClick=="h" then
+        y=y+(blockH/2)
+        my=my+(blockH/2)
+        mx=mx+blockW+spacing
+    elseif directionClick=="v" then
+        x=x+(blockW/2)
+        mx=mx+(blockW/2)
+        my=my+blockH+spacing
+    elseif directionClick=="d" then
+        x=x+(blockW/4)
+        y=y+(blockH/4)
+        mx=mx+blockW+spacing
+        my=my+blockH+spacing
+    elseif directionClick=="hb" then
+        x=x+(blockW+spacing)
+        y=y+(blockH/2)
+        my=my+(blockH/2)
+    elseif directionClick=="vb" then
+        x=x+(blockW/2)
+        y=y+blockH+spacing
+        mx=mx+(blockW/2)
+    elseif directionClick=="db" then
+        x=x+blockW+spacing
+        y=y+blockH+spacing
+    elseif directionClick=="sd" then
+        x=x+blockW+spacing-(blockW/4)
+        y=y+(blockH/4)
+        my=my+blockH+spacing
+    elseif directionClick=="sdb" then
+        x=x+(blockW/4)
+        y=y+blockH+spacing-(blockH/4)
+        mx=mx+blockW+spacing
+    end
+    return x,y,mx,my
 end
