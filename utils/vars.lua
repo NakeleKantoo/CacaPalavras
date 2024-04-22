@@ -59,7 +59,7 @@ particles = {} -- (text,color,posx,posy,ttl)
 buttons = {
     {img=love.graphics.newImage("img/settings.png")},
     {img=love.graphics.newImage("img/new.png")},
-    {img=love.graphics.newImage("img/market.png")}
+    {img=love.graphics.newImage("img/stats.png")}
 }
 
 settings,numSettings = loadSettings()

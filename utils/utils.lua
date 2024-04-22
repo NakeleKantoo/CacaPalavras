@@ -209,6 +209,7 @@ function foundWord(word)
     table.insert(particles,{text="+"..points,color={0,1,0},posx=mx,posy=my,ttl=1.5})
     gameScore.points=gameScore.points+points
     gameScore.thisCoins=math.max(15,math.floor(gameScore.points/500*(difficulty+1)))
+    playFound()
 end
 
 function isThisWordFound(word)

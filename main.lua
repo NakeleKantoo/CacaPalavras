@@ -5,6 +5,8 @@ require("utils.draw")
 require("utils.utils")
 require("utils.palavras")
 require("utils.clickHandler")
+require("utils.sounds")
+require("utils.json")
 
 function love.load()
     board = newBoard()

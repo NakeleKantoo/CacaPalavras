@@ -253,7 +253,7 @@ function buttonWrapper(text,nx,ny,nw,nh,fn,...)
         btnColor=drawColors.buttonHighlight
         if love.mouse.isDown(1) then
             btnColor=drawColors.buttonPress
-            if pressed==false then fn(...) end
+            if pressed==false then fn(...); playMenu() end
             pressed=true
         end
     end
