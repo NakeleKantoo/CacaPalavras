@@ -51,16 +51,6 @@ function drawWords()
     if maxW==screenw-50 then
         local availablew = screenw-50-10
         local totalw = 0
-        --local yippe = true
-        --while yippe do
-        --    if totalw>=availablew then
-        --        totalw=totalw-availablew --TODO IMPLEMENT WHOLE WORD WRAPPING HERE JUST TO MAKE LOVE SUCK MY BALLS
-        --        h = (h-10)+textfont:getHeight()+10
-        --    else
-        --        yippe=false
-        --    end
-        --end
-
         for i=1,#txt do
             if i%2==0 then
                 local word = txt[i]
