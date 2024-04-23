@@ -132,6 +132,16 @@ function invertWord(word)
 end
 
 function newGame(dw,ds)
+    resetBoard(dw,ds)
+    gameState.paused=false
+    gameState.inUI.winMenu=false
+    gameState.inUI.configMenu=false
+    gameState.inUI.storeMenu=false
+    particles={}
+    adjustGameScore()
+end
+
+function resetBoard(dw,ds)
     numWords=numWords+dw
     boardW=boardW+ds
     boardH=boardH+ds
@@ -143,16 +153,10 @@ function newGame(dw,ds)
         local spacing = 30
         blockW=(screenw-spacing-(interSpace*boardW))/boardW
         blockH=blockW
-        scale = blockH/1.5/font:getHeight()
-        font=love.graphics.newFont("fonts/SpaceMono-Regular.ttf",font:getHeight()*scale)
-        textfont=love.graphics.newFont("fonts/SpaceMono-Regular.ttf",textfont:getHeight()*scale)
+        scale = blockH/1.5/boardfont:getHeight()
+        boardfont=love.graphics.newFont("fonts/SpaceMono-Regular.ttf",boardfont:getHeight()*scale)
+        --textfont=love.graphics.newFont("fonts/SpaceMono-Regular.ttf",textfont:getHeight()*scale)
     end
-    gameState.paused=false
-    gameState.inUI.winMenu=false
-    gameState.inUI.configMenu=false
-    gameState.inUI.storeMenu=false
-    particles={}
-    adjustGameScore()
 end
 
 function generateColor()

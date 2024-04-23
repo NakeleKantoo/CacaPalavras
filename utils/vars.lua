@@ -14,6 +14,7 @@ rng = love.math.random
 screenw,screenh = love.graphics.getDimensions()
 font = 30
 textfont = 25
+boardfont = 30
 clicked = 0
 directionClick = false
 destinyClick = 0
@@ -63,7 +64,7 @@ buttons = {
 }
 
 settings,numSettings = loadSettings()
-
+settingsPage, settingsMaxPage = 1,getMaxSettingsPage()
 
 system = love.system.getOS()
 
@@ -80,13 +81,16 @@ if checkMobile() then
         local tx, ty = love.graphics.getDimensions()
         if ty>tx then wait=false end
     end
+    local standard = 392 -- my phone's width
     screenw, screenh = love.graphics.getDimensions()
     local spacing = 30
     blockW=(screenw-spacing-(interSpace*boardW))/boardW
     blockH=blockW
-    scale = blockH/1.5/font
-    font=font*scale
-    textfont=textfont*scale
+    scale = blockH/1.5/boardfont
+    scaleNormal = screenw/392
+    font=font*0.8*scaleNormal
+    textfont=textfont*0.8*scaleNormal
+    boardfont=boardfont*scale
 else
     love.window.setFullscreen(true)
     screenw, screenh = love.graphics.getDimensions()
@@ -94,3 +98,4 @@ end
 
 font=love.graphics.newFont("fonts/SpaceMono-Regular.ttf",font)
 textfont=love.graphics.newFont("fonts/SpaceMono-Regular.ttf",textfont)
+boardfont=love.graphics.newFont("fonts/SpaceMono-Regular.ttf",boardfont)

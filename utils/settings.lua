@@ -163,5 +163,20 @@ function changeWrapper(tab)
         difficulty = tab.possible[tab.value]
     elseif n=="Tema" then
         drawColors = tab.possible[tab.value]
+    elseif n=="Tamanho" then
+        boardW = tab.possible[tab.value]
+        boardH = tab.possible[tab.value]
+        resetBoard(0,0)
     end
+end
+
+function getMaxSettingsPage()
+    --Scales correct
+    local widthScale = 1.2
+    --if checkMobile()==false then widthScale=2.5 end
+
+    local w = screenw/widthScale
+    local h = screenh/1.5
+    local x = screenw/2-w/2
+    local y = screenh/2-h/2
 end

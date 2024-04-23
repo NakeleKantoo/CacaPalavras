@@ -22,37 +22,41 @@ function love.update(dt)
         deltaTime=deltaTime-1
     end
     updateParticles(dt)
-
-    if love.mouse.isDown(1) then
-        local mx, my = love.mouse.getPosition()
-        local block = checkWhichBlock(mx,my)
-        if block>0 then
-            directionClick = checkDirection(clicked,block)
-            destinyClick=block
-        end
-    else
-        pressed=false
-        if clicked>0 then
-            --check word
-            local word = checkWord(clicked,destinyClick,directionClick)
-            for i,v in ipairs(palavras) do
-                if word==v then
-                    local already = isThisWordFound(word)
-                    if already==false then
-                        foundWord(word)
-                    end
-                elseif invertWord(word) == v then
-                    local already = isThisWordFound(word)                    
-                    if already==false then
-                        foundWord(invertWord(word))
+    if gameState.paused==false then
+        if love.mouse.isDown(1) then
+            local mx, my = love.mouse.getPosition()
+            local block = checkWhichBlock(mx,my)
+            if block>0 then
+                directionClick = checkDirection(clicked,block)
+                destinyClick=block
+            end
+        else
+            pressed=false
+            if clicked>0 then
+                --check word
+                local word = checkWord(clicked,destinyClick,directionClick)
+                for i,v in ipairs(palavras) do
+                    if word==v then
+                        local already = isThisWordFound(word)
+                        if already==false then
+                            foundWord(word)
+                        end
+                    elseif invertWord(word) == v then
+                        local already = isThisWordFound(word)                    
+                        if already==false then
+                            foundWord(invertWord(word))
+                        end
                     end
                 end
+                clicked=0
             end
-
-            clicked=0
+        end
+        checkVictory()
+    else
+        if love.mouse.isDown(1)==false then
+            pressed=false
         end
     end
-    checkVictory()
 end
 
 function love.draw()

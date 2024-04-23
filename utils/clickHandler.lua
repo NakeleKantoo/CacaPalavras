@@ -44,6 +44,7 @@ function checkDirection(origin,destiny)
 end
 
 function checkWord(origin,destiny,dir)
+    if gameState.paused then return false end
     local obj = ""
     if directionClick=="h" then
         for i=origin,destiny do
