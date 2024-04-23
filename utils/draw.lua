@@ -66,9 +66,8 @@ function drawWords()
                 local word = txt[i]
                 totalw=totalw+textfont:getWidth(word)
                 if totalw<availablew then
-                    
                 else
-                    totalw=0
+                    totalw=textfont:getWidth(word)
                     h = (h-10)+textfont:getHeight()+10
                 end
             end
