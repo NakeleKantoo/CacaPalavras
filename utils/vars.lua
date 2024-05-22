@@ -66,6 +66,8 @@ buttons = {
 
 settings,numSettings = loadSettings()
 
+stats,numStats = loadStatistics()
+
 system = love.system.getOS()
 
 function checkMobile()
