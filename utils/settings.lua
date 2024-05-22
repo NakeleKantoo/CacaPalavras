@@ -3,9 +3,11 @@ function loadSettings()
         hardSetting = {id=1,value="Médio",name="Dificuldade",possible=loadPossibleDifficulties()},
         volume = {id=2,value=100,name="Volume",min=0,max=100,step=5},
         theme = {id=3,value="Roxo",name="Tema",possible=loadPossibleThemes()},
-        size = {id=4,value="10x10",name="Tamanho",possible=loadPossibleSizes()}
+        size = {id=4,value="10x10",name="Tamanho",possible=loadPossibleSizes()},
+        atheme = {id=5,value="Roxo",name="Tema",possible=loadPossibleThemes()},
+        btheme = {id=6,value="Roxo",name="Tema",possible=loadPossibleThemes()}
     }
-    return obj,4
+    return obj,6
 end
 
 function loadPossibleDifficulties()
@@ -171,12 +173,37 @@ function changeWrapper(tab)
 end
 
 function getMaxSettingsPage()
+    --total pages
+    local pages = 1
+    local maxperpage = 0
+    local updating = true
+
     --Scales correct
     local widthScale = 1.2
     --if checkMobile()==false then widthScale=2.5 end
 
-    local w = screenw/widthScale
-    local h = screenh/1.5
-    local x = screenw/2-w/2
-    local y = screenh/2-h/2
+    local aw = screenw/widthScale
+    local ah = screenh/1.5
+    local ax = screenw/2-aw/2
+    local ay = screenh/2-ah/2
+
+    --to check for max pages
+    local y=ay+font:getHeight()*2+textfont:getHeight()+5
+    for i=1,numSettings do
+        y=y+font:getHeight()*2+textfont:getHeight()+5
+        --check if this is inside the bounding box
+        if updating then maxperpage=maxperpage+1 end
+        local h = font:getHeight()+18+math.max(font:getWidth("+"),font:getHeight())
+        if y >= ay and y+h <= ay+ah then
+        else
+            pages = pages+1
+            updating=false
+            --reset the y
+            y=ay+font:getHeight()*2+textfont:getHeight()+5
+        end
+    end
+    --yea this kind of works.
+    print(pages,maxperpage)
+    return pages, maxperpage
 end
+

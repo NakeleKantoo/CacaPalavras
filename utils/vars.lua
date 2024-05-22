@@ -51,6 +51,7 @@ drawColors = {
     button = {0.501, 0.337, 0.643},
     buttonHighlight = {0.584, 0.454, 0.803},
     buttonPress = {0.294, 0.192, 0.509},
+    text = {1,1,1},
 
     foundWord = {1, 0.627, 0.239}--{1.0, 0.321, 0.321}
 }
@@ -64,7 +65,6 @@ buttons = {
 }
 
 settings,numSettings = loadSettings()
-settingsPage, settingsMaxPage = 1,getMaxSettingsPage()
 
 system = love.system.getOS()
 
@@ -99,3 +99,5 @@ end
 font=love.graphics.newFont("fonts/SpaceMono-Regular.ttf",font)
 textfont=love.graphics.newFont("fonts/SpaceMono-Regular.ttf",textfont)
 boardfont=love.graphics.newFont("fonts/SpaceMono-Regular.ttf",boardfont)
+
+settingsPage, settingsMaxPage, settingsMaxPerPage = 1,getMaxSettingsPage()

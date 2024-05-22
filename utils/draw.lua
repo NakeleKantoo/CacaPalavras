@@ -192,11 +192,30 @@ function drawSettings()
     printf("Configurações",font,x,y+15,w,"center",{1,1,1},drawColors.shading,3,drawColors.underline)
 
     y=y+font:getHeight()*2+textfont:getHeight()+5
-    for i=1,numSettings do
+    local min, max = settingsMaxPerPage*(settingsPage-1)+1,math.min(numSettings,settingsMaxPerPage*settingsPage)
+    for i=min,max do
         v={}
         for k,vl in pairs(settings) do if i==vl.id then v=vl end end
         settingsOption(v,w-30,x+15,y)
         y=y+font:getHeight()*2+textfont:getHeight()+5
+    end
+
+    --draw page thing
+    if settingsMaxPage>1 then
+        local bw,bh = 30,30
+        local spacing = 10
+        local text = settingsPage.."/"..settingsMaxPage
+        local textW = textfont:getWidth(text)
+        local bx, by = screenw/2+w/2-(bw*2)-textW-(spacing*4),screenh/2+h/2-(spacing*2)-bh
+        buttonWrapper("-",bx,by,bw,bh,function ()
+            settingsPage=math.max(1,settingsPage-1)
+        end)
+        bx=bx+bw+spacing
+        printf(text,textfont,bx,by,textW,"center",drawColors.text,drawColors.shading,3)
+        bx=bx+textW+spacing
+        buttonWrapper("+",bx,by,bw,bh,function ()
+            settingsPage=math.min(settingsMaxPage,settingsPage+1)
+        end)
     end
 end
 
