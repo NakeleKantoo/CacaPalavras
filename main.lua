@@ -1,4 +1,6 @@
 VERSION = "1.0"
+require("utils.json")
+require("utils.stats")
 require("utils.settings")
 require("utils.vars")
 require("utils.draw")
@@ -6,8 +8,6 @@ require("utils.utils")
 require("utils.palavras")
 require("utils.clickHandler")
 require("utils.sounds")
-require("utils.json")
-require("utils.stats")
 
 function love.load()
     board = newBoard()
@@ -21,6 +21,7 @@ function love.update(dt)
     if deltaTime>=1 then
         gameScore.time=increaseSecond()
         deltaTime=deltaTime-1
+        saveStats()
     end
     updateParticles(dt)
     if gameState.paused==false then
@@ -76,6 +77,7 @@ function love.draw()
     --UI drawings
     if gameState.inUI.configMenu then drawSettings() end
     if gameState.inUI.winMenu then drawVictory() end
+    if gameState.inUI.statsMenu then drawStats() end
 end
 
 function love.mousepressed(x,y)
@@ -92,7 +94,8 @@ function love.mousepressed(x,y)
         elseif btn==2 then -- new
             newGame(0,0)
         elseif btn==3 then -- store (fuck)
-
+            gameState.paused=true
+            gameState.inUI.statsMenu=true
         end
     else
         if gameState.inUI.configMenu then
@@ -109,4 +112,5 @@ function love.mousepressed(x,y)
         end
     end
 end
+
 

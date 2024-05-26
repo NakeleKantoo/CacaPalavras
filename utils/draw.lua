@@ -366,3 +366,55 @@ function drawParticles()
         love.graphics.print(particle.text,textfont,particle.posx+2,particle.posy+2)
     end
 end
+
+function drawStats()
+    --grey out the background
+    love.graphics.setColor(0,0,0,0.25)
+    love.graphics.rectangle('fill',0,0,screenw,screenh)
+
+    --draw the back of menu
+    local widthScale = 1.5
+    if checkMobile()==false then widthScale=2.6 end
+
+    local heightScale = 2.5
+    if checkMobile()==false then heightScale=3 end
+
+    local w = screenw/widthScale
+    local h = screenh/heightScale
+    local x = screenw/2-w/2
+    local y = screenh/2-h/2
+
+    --shading
+    love.graphics.setColor(drawColors.shading)
+    love.graphics.rectangle("fill",x+15,y+15,w,h)
+
+    --actual back
+    love.graphics.setColor(drawColors.back)
+    love.graphics.rectangle("fill",x,y,w,h)
+
+    --text
+    printf("Estatísticas:",font,x,y+15,w,"center",{1,1,1},drawColors.shading,3,drawColors.underline)
+    x=x+5
+    w=w-10
+    y=y+font:getHeight()+15+15
+    for i=1,#stats do
+        printf(stats[i].name,font,x,y+15,w,"left",{1,1,1},drawColors.shading,3)
+        printf(stats[i].value,font,x,y+15,w,"right",{1,1,1},drawColors.shading,3)
+        y=y+font:getHeight()
+    end
+    
+    
+    --reset vars
+    x=x-5
+    w=w+10
+
+    --button dimensions
+    local btnW = math.max(w/20,font:getWidth("Voltar")+20)
+    local btnH = math.max(h/10,font:getHeight()+20)
+    --button for new game
+    x = screenw/2-btnW/2
+    y = screenh/2+h/2-15-btnH
+    buttonWrapper("Voltar",x,y,btnW,btnH,function ()
+        gameState.inUI.statsMenu=false;gameState.paused=false
+    end,0,0)
+end

@@ -4,10 +4,15 @@ function loadSettings()
         volume = {id=2,value=100,name="Volume",min=0,max=100,step=5},
         theme = {id=3,value="Roxo",name="Tema",possible=loadPossibleThemes()},
         size = {id=4,value="10x10",name="Tamanho",possible=loadPossibleSizes()},
-        atheme = {id=5,value="Roxo",name="Tema",possible=loadPossibleThemes()},
-        btheme = {id=6,value="Roxo",name="Tema",possible=loadPossibleThemes()}
+        numWords = {id=5,value=10,name="Nº Palavras",min=5,max=15,step=1}
     }
-    return obj,6
+    if love.filesystem.getInfo("config.json") then
+        obj = json.decode(love.filesystem.read("config.json"))
+    else
+        love.filesystem.write("config.json",json.encode(obj))
+    end
+
+    return obj,5
 end
 
 function loadPossibleDifficulties()
@@ -117,6 +122,7 @@ function switchNext(tab)
         end
     end
     changeWrapper(tab)
+    love.filesystem.write("config.json",json.encode(settings))
 end
 
 function switchPrior(tab)
@@ -133,6 +139,7 @@ function switchPrior(tab)
         end
     end
     changeWrapper(tab)
+    love.filesystem.write("config.json",json.encode(settings))
 end
 
 function stepSetting(tab,signal)
@@ -141,6 +148,7 @@ function stepSetting(tab,signal)
     else
         tab.value=math.max(tab.value-tab.step,tab.min)
     end
+    love.filesystem.write("config.json",json.encode(settings))
 end
 
 function stepWrapper(tab)
@@ -155,6 +163,7 @@ function stepWrapper(tab)
     if stg.name=="Volume" then
         changeVolume()
     end
+    love.filesystem.write("config.json",json.encode(settings))
 end
 
 function changeWrapper(tab)
@@ -170,6 +179,7 @@ function changeWrapper(tab)
         boardH = tab.possible[tab.value]
         resetBoard(0,0)
     end
+    love.filesystem.write("config.json",json.encode(settings))
 end
 
 function getMaxSettingsPage()

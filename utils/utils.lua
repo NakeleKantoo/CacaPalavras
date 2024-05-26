@@ -8,7 +8,7 @@ table.insert(diffOrientations,3,{"h","h","v","v","v","d","d","d","sd","sd","sd"}
 
 function newBoard()
     ::retry:: --dont get stuck with hopeless placements (unlucky ahh random shit)
-    local words = getRandomWords(numWords)
+    local words = getRandomWords(settings.numWords.value)
     palavras={}
     for i=1,#words do
         palavras[#palavras+1] = words[i]
@@ -120,6 +120,8 @@ function checkVictory()
         --newGame(0,0)
         gameState.paused=true
         gameState.inUI.winMenu=true
+        updateStats()
+        playVictory()
     end
 end
 
@@ -142,7 +144,7 @@ function newGame(dw,ds)
 end
 
 function resetBoard(dw,ds)
-    numWords=numWords+dw
+    numWords=settings.numWords.value
     boardW=boardW+ds
     boardH=boardH+ds
     board = newBoard()
@@ -182,6 +184,18 @@ function getSeconds()
     local secs = tonumber(time[2])
     local mins = tonumber(time[1])
     return mins*60+secs
+end
+
+function getFormattedTime(timeGiven)
+    local secs = timeGiven
+    local mins = 0
+    while secs>=60 do
+        secs=secs-60
+        mins=mins+1
+    end
+    if secs<10 then secs="0"..tostring(secs) end
+    if mins<10 then mins="0"..tostring(mins) end
+    return mins..":"..secs
 end
 
 function split(str, sep)

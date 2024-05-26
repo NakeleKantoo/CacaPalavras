@@ -32,7 +32,7 @@ gameState = {
         winMenu = false,
         newMenu = false,
         configMenu = false,
-        storeMenu = false
+        statsMenu = false
     }
 }
 
