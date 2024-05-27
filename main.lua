@@ -22,6 +22,7 @@ function love.update(dt)
         gameScore.time=increaseSecond()
         deltaTime=deltaTime-1
         saveStats()
+        saveSettings()
     end
     updateParticles(dt)
     if gameState.paused==false then
@@ -108,7 +109,17 @@ function love.mousepressed(x,y)
         end
         if gameState.inUI.winMenu then
             local btn = winCollision(x,y)
-            gameState.inUI.winMenu=false
+            if btn=="outside" then
+            --gameState.inUI.winMenu=false
+            --gameState.paused=false
+            end
+        end
+        if gameState.inUI.statsMenu then
+            local btn = statsCollision(x,y)
+            if btn=="outside" then
+                gameState.inUI.statsMenu=false
+                gameState.paused=false
+            end
         end
     end
 end

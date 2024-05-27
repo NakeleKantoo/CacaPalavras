@@ -1,17 +1,11 @@
 function loadSettings()
-    local obj = {
-        hardSetting = {id=1,value="Médio",name="Dificuldade",possible=loadPossibleDifficulties()},
-        volume = {id=2,value=100,name="Volume",min=0,max=100,step=5},
-        theme = {id=3,value="Roxo",name="Tema",possible=loadPossibleThemes()},
-        size = {id=4,value="10x10",name="Tamanho",possible=loadPossibleSizes()},
-        numWords = {id=5,value=10,name="Nº Palavras",min=5,max=15,step=1}
-    }
+    local obj = {}
     if love.filesystem.getInfo("config.json") then
         obj = json.decode(love.filesystem.read("config.json"))
     else
-        love.filesystem.write("config.json",json.encode(obj))
+        love.filesystem.write("config.json",json.encode(getSettingsDefault()))
+        obj=getSettingsDefault()
     end
-
     return obj,5
 end
 
@@ -47,16 +41,18 @@ function loadPossibleThemes()
             button = {0.501, 0.337, 0.643},
             buttonHighlight = {0.584, 0.454, 0.803},
             buttonPress = {0.294, 0.192, 0.509},
+            text = {1,1,1},
             foundWord = {1, 0.627, 0.239}
         },
         ["Azul"] = { --TODO
-            gameBack = {0.211, 0.09, 0.368},
-            shading = {0.117, 0.0, 0.254, 0.65},
-            back = {0.403, 0.227, 0.713},
-            underline = {0.659, 0.435, 1},
-            button = {0.501, 0.337, 0.643},
-            buttonHighlight = {0.584, 0.454, 0.803},
-            buttonPress = {0.294, 0.192, 0.509},
+            gameBack = {0, 0.341, 0.722},
+            shading = {0, 0.141, 0.302},
+            back = {0, 0.463, 0.761},
+            underline = {0.278, 0.659, 0.902},
+            button = {0.196, 0.463, 0.761},
+            buttonHighlight = {0.125, 0.329, 0.549},
+            buttonPress = {0.078, 0.286, 0.51},
+            text = {1,1,1},
             foundWord = {1, 0.627, 0.239}
         },
         ["Vermelho"] = { --TODO
@@ -67,6 +63,7 @@ function loadPossibleThemes()
             button = {0.501, 0.337, 0.643},
             buttonHighlight = {0.584, 0.454, 0.803},
             buttonPress = {0.294, 0.192, 0.509},
+            text = {1,1,1},
             foundWord = {1, 0.627, 0.239}
         },
         ["Verde"] = { --TODO
@@ -77,6 +74,7 @@ function loadPossibleThemes()
             button = {0.501, 0.337, 0.643},
             buttonHighlight = {0.584, 0.454, 0.803},
             buttonPress = {0.294, 0.192, 0.509},
+            text = {1,1,1},
             foundWord = {1, 0.627, 0.239}
         },
         ["Escuro"] = {
@@ -87,16 +85,18 @@ function loadPossibleThemes()
             button = {0.6,0.6,0.6},
             buttonHighlight = {0.8,0.8,0.8},
             buttonPress = {0.55,0.55,0.55},
+            text = {1,1,1},
             foundWord = {1, 0.627, 0.239}
         },
         ["Laranja"] = { --TODO
-            gameBack = {0.211, 0.09, 0.368},
-            shading = {0.117, 0.0, 0.254, 0.65},
-            back = {0.403, 0.227, 0.713},
-            underline = {0.659, 0.435, 1},
-            button = {0.501, 0.337, 0.643},
-            buttonHighlight = {0.584, 0.454, 0.803},
-            buttonPress = {0.294, 0.192, 0.509},
+            gameBack = {0.15,0.15,0.15},
+            shading = {0.1,0.1,0.1, 0.65},
+            back = {0.2,0.2,0.2},
+            underline = {1,1,1},
+            button = {0.6,0.6,0.6},
+            buttonHighlight = {0.8,0.8,0.8},
+            buttonPress = {0.55,0.55,0.55},
+            text = {1,1,1},
             foundWord = {1, 0.627, 0.239}
         },
         keys = {"Vermelho","Verde","Azul","Roxo","Laranja","Escuro"}
@@ -122,7 +122,6 @@ function switchNext(tab)
         end
     end
     changeWrapper(tab)
-    love.filesystem.write("config.json",json.encode(settings))
 end
 
 function switchPrior(tab)
@@ -139,7 +138,6 @@ function switchPrior(tab)
         end
     end
     changeWrapper(tab)
-    love.filesystem.write("config.json",json.encode(settings))
 end
 
 function stepSetting(tab,signal)
@@ -148,7 +146,6 @@ function stepSetting(tab,signal)
     else
         tab.value=math.max(tab.value-tab.step,tab.min)
     end
-    love.filesystem.write("config.json",json.encode(settings))
 end
 
 function stepWrapper(tab)
@@ -163,7 +160,6 @@ function stepWrapper(tab)
     if stg.name=="Volume" then
         changeVolume()
     end
-    love.filesystem.write("config.json",json.encode(settings))
 end
 
 function changeWrapper(tab)
@@ -179,7 +175,6 @@ function changeWrapper(tab)
         boardH = tab.possible[tab.value]
         resetBoard(0,0)
     end
-    love.filesystem.write("config.json",json.encode(settings))
 end
 
 function getMaxSettingsPage()
@@ -202,7 +197,6 @@ function getMaxSettingsPage()
     for i=1,numSettings do
         y=y+font:getHeight()*2+textfont:getHeight()+5
         --check if this is inside the bounding box
-        if updating then maxperpage=maxperpage+1 end
         local h = font:getHeight()+18+math.max(font:getWidth("+"),font:getHeight())
         if y >= ay and y+h <= ay+ah then
         else
@@ -211,9 +205,25 @@ function getMaxSettingsPage()
             --reset the y
             y=ay+font:getHeight()*2+textfont:getHeight()+5
         end
+        if updating then maxperpage=maxperpage+1 end
     end
     --yea this kind of works.
     print(pages,maxperpage)
     return pages, maxperpage
+end
+
+function getSettingsDefault()
+    local obj ={
+        hardSetting = {id=1,value="Médio",name="Dificuldade",possible=loadPossibleDifficulties()},
+        volume = {id=2,value=100,name="Volume",min=0,max=100,step=5},
+        theme = {id=3,value="Roxo",name="Tema",possible=loadPossibleThemes()},
+        size = {id=4,value="10x10",name="Tamanho",possible=loadPossibleSizes()},
+        numWords = {id=5,value=10,name="Nº Palavras",min=5,max=15,step=1}
+    }
+    return obj
+end
+
+function saveSettings()
+    love.filesystem.write("config.json",json.encode(settings))
 end
 

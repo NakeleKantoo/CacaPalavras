@@ -1,7 +1,11 @@
 require("love")
 
-boardW = 10
-boardH = 10
+stats,numStats = loadStatistics()
+
+settings,numSettings = loadSettings()
+
+boardW = settings.size.possible[settings.size.value]
+boardH = settings.size.possible[settings.size.value]
 blockW = 35
 blockH = 35
 numWords = 10
@@ -63,10 +67,6 @@ buttons = {
     {img=love.graphics.newImage("img/new.png")},
     {img=love.graphics.newImage("img/stats.png")}
 }
-
-settings,numSettings = loadSettings()
-
-stats,numStats = loadStatistics()
 
 system = love.system.getOS()
 

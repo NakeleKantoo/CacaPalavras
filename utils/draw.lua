@@ -373,10 +373,10 @@ function drawStats()
     love.graphics.rectangle('fill',0,0,screenw,screenh)
 
     --draw the back of menu
-    local widthScale = 1.5
+    local widthScale = 1.2
     if checkMobile()==false then widthScale=2.6 end
 
-    local heightScale = 2.5
+    local heightScale = 2.3
     if checkMobile()==false then heightScale=3 end
 
     local w = screenw/widthScale
@@ -398,8 +398,8 @@ function drawStats()
     w=w-10
     y=y+font:getHeight()+15+15
     for i=1,#stats do
-        printf(stats[i].name,font,x,y+15,w,"left",{1,1,1},drawColors.shading,3)
-        printf(stats[i].value,font,x,y+15,w,"right",{1,1,1},drawColors.shading,3)
+        printf(stats[i].name,textfont,x,y+15,w,"left",{1,1,1},drawColors.shading,3)
+        printf(stats[i].value,textfont,x,y+15,w,"right",{1,1,1},drawColors.shading,3)
         y=y+font:getHeight()
     end
     
