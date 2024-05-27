@@ -100,6 +100,7 @@ function checkButtons(mx,my)
     for i, btn in ipairs(buttons) do
         local x = xStart + (i - 1) * (buttonWidth + totalPadding)
         if mx >= x and mx <= x+buttonWidth and my >= y and my <= y+buttonHeight then
+            playMenu()
             return i
         end
     end

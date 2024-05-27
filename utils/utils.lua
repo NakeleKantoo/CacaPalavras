@@ -150,6 +150,8 @@ function resetBoard(dw,ds)
     board = newBoard()
     achadas={}
     lines={}
+    gameScore.points=0
+    gameScore.time="00:00"
     if checkMobile() then
         screenw, screenh = love.graphics.getDimensions()
         local spacing = 30

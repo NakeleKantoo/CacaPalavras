@@ -356,6 +356,21 @@ function drawTime()
     love.graphics.printf(gameScore.time,textfont,0,y+7.5,textfont:getWidth(gameScore.time)+5,"center")
 end
 
+function drawPoints()
+    local androidFactor = 0.25
+    if checkMobile() then androidFactor=0.15 end  
+    local buttonHeight = 256*androidFactor -- Altura dos botões (ajuste conforme necessário)
+    -- Calcula a posição y dos botões colados na parte inferior da tela
+    local textHeight = textfont:getHeight()+15
+    local y = screenh - buttonHeight - 20 - textHeight - 15
+
+    local x = screenw-textfont:getWidth(gameScore.points)-20
+    love.graphics.setColor(0, 0, 0, 0.5)
+    love.graphics.rectangle("fill", x, y, 150, textHeight,10)
+    love.graphics.setColor(1,1,1,1)
+    love.graphics.printf(gameScore.points,textfont,x+10,y+7.5,150,"left")
+end
+
 function drawParticles()
     for i=1,#particles do
         local particle = particles[i]

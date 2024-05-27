@@ -72,6 +72,7 @@ function love.draw()
     drawFoundLines()
     drawDock()
     drawTime()
+    drawPoints()
     drawParticles()
     
 
