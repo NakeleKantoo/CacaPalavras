@@ -103,3 +103,22 @@ textfont=love.graphics.newFont("fonts/SpaceMono-Regular.ttf",textfont)
 boardfont=love.graphics.newFont("fonts/SpaceMono-Regular.ttf",boardfont)
 
 settingsPage, settingsMaxPage, settingsMaxPerPage = 1,getMaxSettingsPage()
+
+if love.filesystem.exists("version.scp") then
+    local v = love.filesystem.read("version.scp")
+    if v ~= VERSION then
+        gameState.paused=true
+        love.filesystem.remove("config.json")
+        settings,numSettings = loadSettings()
+        settingsPage, settingsMaxPage, settingsMaxPerPage = 1,getMaxSettingsPage()
+        gameState.paused=false
+        love.filesystem.write("version.scp",VERSION)
+    end
+else
+    gameState.paused=true
+    love.filesystem.remove("config.json")
+    settings,numSettings = loadSettings()
+    settingsPage, settingsMaxPage, settingsMaxPerPage = 1,getMaxSettingsPage()
+    gameState.paused=false
+    love.filesystem.write("version.scp",VERSION)
+end
