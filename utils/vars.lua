@@ -104,7 +104,7 @@ boardfont=love.graphics.newFont("fonts/SpaceMono-Regular.ttf",boardfont)
 
 settingsPage, settingsMaxPage, settingsMaxPerPage = 1,getMaxSettingsPage()
 
-if love.filesystem.exists("version.scp") then
+if love.filesystem.getInfo("version.scp") then
     local v = love.filesystem.read("version.scp")
     if v ~= VERSION then
         gameState.paused=true
