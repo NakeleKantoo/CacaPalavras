@@ -181,8 +181,8 @@ function increaseSecond()
     return mins..":"..secs
 end
 
-function getSeconds()
-    local time = split(gameScore.time,":")
+function getSeconds(time)
+    local time = split(time,":")
     local secs = tonumber(time[2])
     local mins = tonumber(time[1])
     return mins*60+secs
@@ -226,7 +226,7 @@ function foundWord(word)
     local mx, my = love.mouse.getPosition()
     achadas[#achadas+1] = word
     lines[#lines+1] = {origin = clicked, destiny = destinyClick, direction = directionClick, color = currentColor}
-    local points = math.floor((50*word:len())-(math.floor(getSeconds()/15)-math.floor(word:len()*0.75)))
+    local points = math.floor((50*word:len())-(math.floor(getSeconds(gameScore.time)/15)-math.floor(word:len()*0.75)))
     table.insert(particles,{text="+"..points,color={0,1,0},posx=mx,posy=my,ttl=1.5})
     gameScore.points=gameScore.points+points
     gameScore.thisCoins=math.max(15,math.floor(gameScore.points/500*(difficulty+1)))
