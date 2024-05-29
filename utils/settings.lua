@@ -208,7 +208,6 @@ function getMaxSettingsPage()
         if updating then maxperpage=maxperpage+1 end
     end
     --yea this kind of works.
-    print(pages,maxperpage)
     return pages, maxperpage
 end
 

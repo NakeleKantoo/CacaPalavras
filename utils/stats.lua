@@ -40,10 +40,6 @@ function updateStats()
     --update total time
     local totaltime = getSeconds(stats[2].value)
     local newtotaltime = totaltime+time
-    print("time: ", time)
-    print("recorded: ", totaltime)
-    print("new time: ", newtotaltime)
-    print("get formated?", getFormattedTime(newtotaltime))
     stats[2].value=getFormattedTime(newtotaltime)
 
     --update total games
