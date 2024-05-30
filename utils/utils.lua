@@ -120,6 +120,7 @@ function checkVictory()
         --newGame(0,0)
         gameState.paused=true
         gameState.inUI.winMenu=true
+        gameState.won=true
         updateStats()
         playVictory()
     end
@@ -139,6 +140,7 @@ function newGame(dw,ds)
     gameState.inUI.winMenu=false
     gameState.inUI.configMenu=false
     gameState.inUI.storeMenu=false
+    gameState.won=false
     particles={}
     adjustGameScore()
 end
@@ -226,11 +228,19 @@ function foundWord(word)
     local mx, my = love.mouse.getPosition()
     achadas[#achadas+1] = word
     lines[#lines+1] = {origin = clicked, destiny = destinyClick, direction = directionClick, color = currentColor}
-    local points = math.floor((50*word:len())-(math.floor(getSeconds(gameScore.time)/15)-math.floor(word:len()*0.75)))
+    local points = getPoints(word)
     table.insert(particles,{text="+"..points,color={0,1,0},posx=mx,posy=my,ttl=1.5})
     gameScore.points=gameScore.points+points
     gameScore.thisCoins=math.max(15,math.floor(gameScore.points/500*(difficulty+1)))
     playFound()
+end
+
+function getPoints(word)
+    local pts = 0
+    --increase
+
+
+    return math.floor((50*word:len())-(math.floor(getSeconds(gameScore.time)/15)-math.floor(word:len()*0.75)))
 end
 
 function isThisWordFound(word)
@@ -302,4 +312,11 @@ function changemode(fwd)
             gameState.mode="normal"
         end
     end
+end
+
+function checkForUIs()
+    for k,v in pairs(gameState.inUI) do
+        if v then return true end
+    end
+    return false
 end

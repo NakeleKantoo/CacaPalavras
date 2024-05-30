@@ -47,22 +47,10 @@ function drawWords()
     end
     --print(wowText)
     local maxW = math.min(textfont:getWidth(wowText)+20,screenw-50)
-    local h = textfont:getHeight()+10
-    if maxW==screenw-50 then
-        local availablew = screenw-50-10
-        local totalw = 0
-        for i=1,#txt do
-            if i%2==0 then
-                local word = txt[i]
-                totalw=totalw+textfont:getWidth(word)
-                if totalw<availablew then
-                else
-                    totalw=textfont:getWidth(word)
-                    h = (h-10)+textfont:getHeight()+10
-                end
-            end
-        end
-    end
+    local h = 0
+    local tmp, many = textfont:getWrap(wowText,maxW)
+    h=((h-10)+textfont:getHeight())*#many+15
+
     local x = screenw/2-maxW/2
     local y = 15
 
@@ -442,9 +430,9 @@ function drawNewGame()
 
     --draw the back of menu
     local widthScale = 1.2
-    if checkMobile()==false then widthScale=2.6 end
+    if checkMobile()==false then widthScale=3 end
 
-    local heightScale = 2.3
+    local heightScale = 2
     if checkMobile()==false then heightScale=3 end
 
     local w = screenw/widthScale
@@ -464,20 +452,28 @@ function drawNewGame()
     printf("Novo Jogo",font,x,y+15,w,"center",{1,1,1},drawColors.shading,3,drawColors.underline)
     x=x+5
     w=w-10
-    y=y+font:getHeight()+15+15
+    y=y+font:getHeight()+15
     local mode = "Normal: Jogo normal, Tempo ilimitado!"
     if gameState.mode=="hardcore" then mode = "Hardcore: Tempo limitado, mais dificil, mais pontos!" end
     if gameState.mode=="tranquilo" then mode = "Tranquilo: Sem tempo, sem pontos, para relaxar" end
-    local btnW = math.max(w/20,font:getWidth(">")+20)
-    local btnH = math.max(h/10,font:getHeight()+5)
-    printf("Modo de jogo: "..mode,textfont,x,y+15,w-btnW*2-15,"left",{1,1,1},drawColors.shading,3)
+    local btnW = math.max(w/20,textfont:getWidth(">")+20)
+    local btnH = math.max(h/10,textfont:getHeight()+5)
+    printf("Modo de jogo: "..mode,textfont,x,y+5,w-btnW*2-15,"left",{1,1,1},drawColors.shading,3)
     x = screenw/2+w/2-btnW*2-15
     buttonWrapper("<",x,y,btnW,btnH,changemode,false)
     x=x+btnW+5
     buttonWrapper(">",x,y,btnW,btnH,changemode,true)
-    y=y+font:getHeight()+15+15
 
-    x=screenw/2-w/2+5
+    local txt = "Modo de jogo: "..mode
+    local maxW = math.min(textfont:getWidth(txt)+20,screenw-50)
+    local nh = 0
+    local tmp, many = textfont:getWrap(txt,w-btnW*2-15) --god damn.
+    print(#many)
+    nh=nh+((textfont:getHeight())*#many)
+    y=y+nh
+
+
+    x=screenw/2-(w+10)/2+5
     printf("Dificuldade: "..settings.hardSetting.value,textfont,x,y+15,w-btnW*2-15,"left",{1,1,1},drawColors.shading,3)
     x = screenw/2+w/2-btnW*2-15
     buttonWrapper("<",x,y,btnW,btnH,switchPrior,settings.hardSetting)

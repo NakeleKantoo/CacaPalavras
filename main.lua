@@ -1,4 +1,4 @@
-VERSION = "1.1" --bump version
+VERSION = "1.0" --bump version
 require("utils.json")
 require("utils.stats")
 require("utils.settings")
@@ -54,7 +54,7 @@ function love.update(dt)
                 clicked=0
             end
         end
-        checkVictory()
+        if gameState.won==false then checkVictory() end
     else
         if love.mouse.isDown(1)==false then
             pressed=false
@@ -71,9 +71,13 @@ function love.draw()
     end
     drawFoundLines()
     drawDock()
-    drawTime()
-    drawPoints()
-    drawParticles()
+    if gameState.mode=="normal" then
+        drawTime()
+        drawPoints()
+    end
+    if gameState.mode~="tranquilo" then
+        drawParticles()
+    end
     
 
     --UI drawings
@@ -84,12 +88,12 @@ function love.draw()
 end
 
 function love.mousepressed(x,y)
-    
-    local block = checkWhichBlock(x,y)
+    local block = 0
+    if gameState.paused==false then block = checkWhichBlock(x,y) end
     if block>0 then
         clicked=block
         currentColor=generateColor()
-    elseif gameState.paused==false then
+    elseif checkForUIs()==false then
         local btn = checkButtons(x,y)
         if btn==1 then -- settings
             gameState.paused=true
@@ -114,8 +118,7 @@ function love.mousepressed(x,y)
         if gameState.inUI.winMenu then
             local btn = winCollision(x,y)
             if btn=="outside" then
-            --gameState.inUI.winMenu=false
-            --gameState.paused=false
+                gameState.inUI.winMenu=false
             end
         end
         if gameState.inUI.statsMenu then

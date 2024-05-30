@@ -190,9 +190,11 @@ local todas = {
 function getRandomWords(num)
     local obj = {}
     while #obj<num do
+        ::retry::
         local index = rng(1,#todas)
         local word = todas[index]
         local found = false
+        if #word>=math.min(boardW,boardH) then goto retry end
         for k,v in ipairs(obj) do
             if v==word then
                 found=true

@@ -38,7 +38,8 @@ gameState = {
         configMenu = false,
         statsMenu = false
     },
-    mode = "normal" -- "normal" | "hardcore"
+    mode = "normal", -- "normal" | "hardcore"
+    won=false
 }
 
 gameScore = {

@@ -24,9 +24,9 @@ function loadPossibleSizes()
     local obj = {
         ["10x10"] = 10,
         ["12x12"] = 12,
-        ["5x5"] = 5,
-        ["7x7"] = 7,
-        keys = {"5x5","7x7","10x10","12x12"}
+        ["8x8"] = 8,
+        ["15x15"] = 15,
+        keys = {"8x8","10x10","12x12","15x15"}
     }
     return obj
 end
