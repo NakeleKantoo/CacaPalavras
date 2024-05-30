@@ -328,7 +328,7 @@ function drawVictory()
     --button for new game
     x = screenw/2-btnW/2
     y = screenh/2+h/2-15-btnH
-    buttonWrapper("Novo Jogo",x,y,btnW,btnH,newGame,0,0)
+    buttonWrapper("Novo Jogo",x,y,btnW,btnH,newGame)
 end
 
 function drawTime()
@@ -493,7 +493,7 @@ function drawNewGame()
     x = screenw/2-btnW/2
     y = screenh/2+h/2-15-btnH
     buttonWrapper("Novo Jogo",x,y,btnW,btnH,function ()
-        newGame(0,0);gameState.inUI.newMenu=false;gameState.paused=false
+        newGame());gameState.inUI.newMenu=false;gameState.paused=false
     end)
 end
 

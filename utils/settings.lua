@@ -171,9 +171,6 @@ function changeWrapper(tab)
     elseif n=="Tema" then
         drawColors = tab.possible[tab.value]
     elseif n=="Tamanho" then
-        boardW = tab.possible[tab.value]
-        boardH = tab.possible[tab.value]
-        resetBoard(0,0)
     end
 end
 

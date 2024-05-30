@@ -134,8 +134,8 @@ function invertWord(word)
     return obj
 end
 
-function newGame(dw,ds)
-    resetBoard(dw,ds)
+function newGame()
+    resetBoard()
     gameState.paused=false
     gameState.inUI.winMenu=false
     gameState.inUI.configMenu=false
@@ -145,10 +145,10 @@ function newGame(dw,ds)
     adjustGameScore()
 end
 
-function resetBoard(dw,ds)
+function resetBoard()
     numWords=settings.numWords.value
-    boardW=boardW+ds
-    boardH=boardH+ds
+    boardW=settings.size.possible[settings.size.value]
+    boardH=settings.size.possible[settings.size.value]
     if numWords>math.min(boardW,boardH)+math.floor(math.min(boardW,boardH)/4) then raisePanic("Número de palavras muito alto!\nNão foi possível gerar um jogo!\nNúmero de palavras reinicializado em 5.");settings.numWords.value=5;saveSettings(); end
     board = newBoard()
     achadas={}
