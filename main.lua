@@ -1,4 +1,4 @@
-VERSION = "1.0"
+VERSION = "1.1" --bump version
 require("utils.json")
 require("utils.stats")
 require("utils.settings")
@@ -80,6 +80,7 @@ function love.draw()
     if gameState.inUI.configMenu then drawSettings() end
     if gameState.inUI.winMenu then drawVictory() end
     if gameState.inUI.statsMenu then drawStats() end
+    if gameState.inUI.newMenu then drawNewGame() end
 end
 
 function love.mousepressed(x,y)
@@ -94,7 +95,9 @@ function love.mousepressed(x,y)
             gameState.paused=true
             gameState.inUI.configMenu=true
         elseif btn==2 then -- new
-            newGame(0,0)
+            gameState.paused=true
+            gameState.inUI.newMenu=true
+            --newGame(0,0)
         elseif btn==3 then -- store (fuck)
             gameState.paused=true
             gameState.inUI.statsMenu=true

@@ -29,14 +29,16 @@ end
 function updateStats()
     local time = getSeconds(gameScore.time)
     local bestTime = getSeconds(stats[1].value)
-    if time<bestTime or stats[1].value=="00:00" then --update best time
+    if time<bestTime or stats[1].value=="00:00" then 
+	--update best time
         stats[1].value=gameScore.time
     end
     
-    if gameScore.points>tonumber(stats[3].value) then --update best points
+    if gameScore.points>tonumber(stats[3].value) then 
+	--update best points
         stats[3].value=tostring(gameScore.points)
     end
-    print()
+
     --update total time
     local totaltime = getSeconds(stats[2].value)
     local newtotaltime = totaltime+time
@@ -44,7 +46,6 @@ function updateStats()
 
     --update total games
     stats[4].value=tostring(tonumber(stats[4].value)+1)
-
 end
 
 function saveStats()

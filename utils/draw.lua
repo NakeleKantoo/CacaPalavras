@@ -431,5 +431,72 @@ function drawStats()
     y = screenh/2+h/2-15-btnH
     buttonWrapper("Voltar",x,y,btnW,btnH,function ()
         gameState.inUI.statsMenu=false;gameState.paused=false
-    end,0,0)
+    end)
+end
+
+
+function drawNewGame()
+    --grey out the background
+    love.graphics.setColor(0,0,0,0.25)
+    love.graphics.rectangle('fill',0,0,screenw,screenh)
+
+    --draw the back of menu
+    local widthScale = 1.2
+    if checkMobile()==false then widthScale=2.6 end
+
+    local heightScale = 2.3
+    if checkMobile()==false then heightScale=3 end
+
+    local w = screenw/widthScale
+    local h = screenh/heightScale
+    local x = screenw/2-w/2
+    local y = screenh/2-h/2
+
+    --shading
+    love.graphics.setColor(drawColors.shading)
+    love.graphics.rectangle("fill",x+15,y+15,w,h)
+
+    --actual back
+    love.graphics.setColor(drawColors.back)
+    love.graphics.rectangle("fill",x,y,w,h)
+
+    --text
+    printf("Novo Jogo",font,x,y+15,w,"center",{1,1,1},drawColors.shading,3,drawColors.underline)
+    x=x+5
+    w=w-10
+    y=y+font:getHeight()+15+15
+    local mode = "Normal: Jogo normal, Tempo ilimitado!"
+    if gameState.mode=="hardcore" then mode = "Hardcore: Tempo limitado, mais dificil, mais pontos!" end
+    if gameState.mode=="tranquilo" then mode = "Tranquilo: Sem tempo, sem pontos, para relaxar" end
+    local btnW = math.max(w/20,font:getWidth(">")+20)
+    local btnH = math.max(h/10,font:getHeight()+5)
+    printf("Modo de jogo: "..mode,textfont,x,y+15,w-btnW*2-15,"left",{1,1,1},drawColors.shading,3)
+    x = screenw/2+w/2-btnW*2-15
+    buttonWrapper("<",x,y,btnW,btnH,changemode,false)
+    x=x+btnW+5
+    buttonWrapper(">",x,y,btnW,btnH,changemode,true)
+    y=y+font:getHeight()+15+15
+
+    x=screenw/2-w/2+5
+    printf("Dificuldade: "..settings.hardSetting.value,textfont,x,y+15,w-btnW*2-15,"left",{1,1,1},drawColors.shading,3)
+    x = screenw/2+w/2-btnW*2-15
+    buttonWrapper("<",x,y,btnW,btnH,switchPrior,settings.hardSetting)
+    x=x+btnW+5
+    buttonWrapper(">",x,y,btnW,btnH,switchNext,settings.hardSetting)
+    y=y+font:getHeight()
+    
+    
+    --reset vars
+    x=x-5
+    w=w+10
+
+    --button dimensions
+    local btnW = math.max(w/20,font:getWidth("Novo Jogo")+20)
+    local btnH = math.max(h/10,font:getHeight()+20)
+    --button for new game
+    x = screenw/2-btnW/2
+    y = screenh/2+h/2-15-btnH
+    buttonWrapper("Novo Jogo",x,y,btnW,btnH,function ()
+        newGame(0,0);gameState.inUI.newMenu=false;gameState.paused=false
+    end)
 end

@@ -283,3 +283,23 @@ function calcDir(x,y,mx,my,spacing,directionClick)
     end
     return x,y,mx,my
 end
+
+function changemode(fwd)
+    if fwd then
+        if gameState.mode=="normal" then
+            gameState.mode="hardcore"
+        elseif gameState.mode=="hardcore" then
+            gameState.mode="tranquilo"
+        elseif gameState.mode=="tranquilo" then
+            gameState.mode="normal"
+        end
+    else
+        if gameState.mode=="normal" then
+            gameState.mode="tranquilo"
+        elseif gameState.mode=="tranquilo" then
+            gameState.mode="hardcore"
+        elseif gameState.mode=="hardcore" then
+            gameState.mode="normal"
+        end
+    end
+end

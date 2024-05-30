@@ -37,7 +37,8 @@ gameState = {
         newMenu = false,
         configMenu = false,
         statsMenu = false
-    }
+    },
+    mode = "normal" -- "normal" | "hardcore"
 }
 
 gameScore = {

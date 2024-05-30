@@ -23,10 +23,10 @@ end
 function loadPossibleSizes()
     local obj = {
         ["10x10"] = 10,
-        ["15x15"] = 15,
-        ["20x20"] = 20,
-        ["25x25"] = 25,
-        keys = {"10x10","15x15","20x20","25x25"}
+        ["12x12"] = 12,
+        ["5x5"] = 5,
+        ["7x7"] = 7,
+        keys = {"5x5","7x7","10x10","12x12"}
     }
     return obj
 end
