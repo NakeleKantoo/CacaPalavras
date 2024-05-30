@@ -161,3 +161,23 @@ function statsCollision(mx,my)
         return "outside"
     end
 end
+
+function newCollision(mx,my)
+    --draw the back of menu
+    local widthScale = 1.15
+    if checkMobile()==false then widthScale=3.5 end
+
+    local heightScale = 2
+    if checkMobile()==false then heightScale=3 end
+
+    local w = screenw/widthScale
+    local h = screenh/heightScale
+    local x = screenw/2-w/2
+    local y = screenh/2-h/2
+    
+    if mx >= x and mx <= x+w and my >= y and my <= y+h then
+        return "pressed"
+    else
+        return "outside"
+    end
+end

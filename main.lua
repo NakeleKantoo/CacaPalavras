@@ -132,6 +132,13 @@ function love.mousepressed(x,y)
                 gameState.paused=false
             end
         end
+        if gameState.inUI.newMenu then
+            local btn = newCollision(x,y)
+            if btn=="outside" then
+                gameState.inUI.newMenu=false
+                gameState.paused=false
+            end
+        end
     end
 end
 

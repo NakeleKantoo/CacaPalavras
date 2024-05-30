@@ -429,8 +429,8 @@ function drawNewGame()
     love.graphics.rectangle('fill',0,0,screenw,screenh)
 
     --draw the back of menu
-    local widthScale = 1.2
-    if checkMobile()==false then widthScale=3 end
+    local widthScale = 1.15
+    if checkMobile()==false then widthScale=3.5 end
 
     local heightScale = 2
     if checkMobile()==false then heightScale=3 end
@@ -452,7 +452,7 @@ function drawNewGame()
     printf("Novo Jogo",font,x,y+15,w,"center",{1,1,1},drawColors.shading,3,drawColors.underline)
     x=x+5
     w=w-10
-    y=y+font:getHeight()+15
+    y=y+font:getHeight()+15+15
     local mode = "Normal: Jogo normal, Tempo ilimitado!"
     if gameState.mode=="hardcore" then mode = "Hardcore: Tempo limitado, mais dificil, mais pontos!" end
     if gameState.mode=="tranquilo" then mode = "Tranquilo: Sem tempo, sem pontos, para relaxar" end
