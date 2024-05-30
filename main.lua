@@ -63,6 +63,8 @@ function love.update(dt)
 end
 
 function love.draw()
+    if PANIC then drawPanic(); return true end
+
     drawBackground()
     drawBoard()
     drawWords()
@@ -88,6 +90,7 @@ function love.draw()
 end
 
 function love.mousepressed(x,y)
+    if PANIC then PANIC=false end
     local block = 0
     if gameState.paused==false then block = checkWhichBlock(x,y) end
     if block>0 then

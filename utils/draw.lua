@@ -496,3 +496,15 @@ function drawNewGame()
         newGame(0,0);gameState.inUI.newMenu=false;gameState.paused=false
     end)
 end
+
+function drawPanic()
+    love.graphics.setColor(0,0,0)
+    love.graphics.rectangle("fill",0,0,screenw,screenh)
+    love.graphics.setColor(1,1,1)
+    local y = screenh/2-font:getHeight()-5
+    love.graphics.printf("ERRO",font,0,y,screenw,"center")
+    y=y+font:getHeight()+5
+    love.graphics.printf(PANICMESSAGE,font,0,y,screenw,"center")
+    y=screenh-font:getHeight()-15
+    love.graphics.printf("Pressione em qualquer lugar para voltar.",font,0,y,screenw,"center")
+end

@@ -1,5 +1,8 @@
 require("love")
 
+PANIC = false
+PANICMESSAGE = ""
+
 stats,numStats = loadStatistics()
 
 settings,numSettings = loadSettings()

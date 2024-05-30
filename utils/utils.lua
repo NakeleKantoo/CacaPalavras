@@ -149,6 +149,7 @@ function resetBoard(dw,ds)
     numWords=settings.numWords.value
     boardW=boardW+ds
     boardH=boardH+ds
+    if numWords>math.min(boardW,boardH)+2 then PANIC=true; PANICMESSAGE="Número de palavras muito alto!\nNão foi possível gerar um jogo!\nNúmero de palavras reinicializado em 5."; settings.numWords.value=5;saveSettings();return false end
     board = newBoard()
     achadas={}
     lines={}
