@@ -1,4 +1,4 @@
-VERSION = "1.0" --bump version
+VERSION = "1.1" --bump version
 require("utils.json")
 require("utils.stats")
 require("utils.settings")
@@ -16,6 +16,7 @@ function love.load()
 end
 
 function love.update(dt)
+    if PANIC then PANICDT=PANICDT-dt end
     if gameState.paused==false then deltaTime=deltaTime+dt end --dt only counts when in game
     --dt checking
     if deltaTime>=1 then
@@ -90,7 +91,7 @@ function love.draw()
 end
 
 function love.mousepressed(x,y)
-    if PANIC then PANIC=false end
+    if PANIC and PANICDT<0 then PANIC=false end
     local block = 0
     if gameState.paused==false then block = checkWhichBlock(x,y) end
     if block>0 then

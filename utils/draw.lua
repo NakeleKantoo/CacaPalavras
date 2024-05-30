@@ -49,7 +49,7 @@ function drawWords()
     local maxW = math.min(textfont:getWidth(wowText)+20,screenw-50)
     local h = 0
     local tmp, many = textfont:getWrap(wowText,maxW)
-    h=((h-10)+textfont:getHeight())*#many+15
+    h=((h-10)+textfont:getHeight()+15)*#many
 
     local x = screenw/2-maxW/2
     local y = 15
@@ -501,10 +501,14 @@ function drawPanic()
     love.graphics.setColor(0,0,0)
     love.graphics.rectangle("fill",0,0,screenw,screenh)
     love.graphics.setColor(1,1,1)
-    local y = screenh/2-font:getHeight()-5
+    local y = screenh/2-font:getHeight()*3-5
     love.graphics.printf("ERRO",font,0,y,screenw,"center")
     y=y+font:getHeight()+5
     love.graphics.printf(PANICMESSAGE,font,0,y,screenw,"center")
-    y=screenh-font:getHeight()-15
-    love.graphics.printf("Pressione em qualquer lugar para voltar.",font,0,y,screenw,"center")
+    if PANICDT<0 then
+        y=screenh-font:getHeight()-15
+        local w,wrap = font:getWrap("Pressione em qualquer lugar para voltar.",screenw)
+        y=y-font:getHeight()*(#wrap-1)
+        love.graphics.printf("Pressione em qualquer lugar para voltar.",font,0,y,screenw,"center")
+    end
 end
