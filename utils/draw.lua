@@ -505,7 +505,6 @@ function drawPanic()
     love.graphics.rectangle("fill",15,font:getHeight()+5,screenw-30,5)
     y=y+font:getHeight()+5
     local align = "center"
-    if checkMobile() then align="justify" end
     love.graphics.printf(PANICMESSAGE,font,0,y,screenw, align)
     if PANICDT<0 then
         y=screenh-font:getHeight()-15
