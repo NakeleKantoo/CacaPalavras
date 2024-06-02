@@ -453,9 +453,9 @@ function drawNewGame()
     x=x+5
     w=w-10
     y=y+font:getHeight()+15+15
-    local mode = "Normal: Jogo normal, Tempo ilimitado!"
-    if gameState.mode=="hardcore" then mode = "Hardcore: Tempo limitado, mais dificil, mais pontos!" end
-    if gameState.mode=="tranquilo" then mode = "Tranquilo: Sem tempo, sem pontos, para relaxar" end
+    local mode = "Normal:\nJogo normal, Tempo ilimitado!"
+    if gameState.mode=="hardcore" then mode = "Hardcore:\nTempo limitado, mais dificil, mais pontos!" end
+    if gameState.mode=="tranquilo" then mode = "Tranquilo:\nSem tempo, sem pontos, para relaxar" end
     local btnW = math.max(w/20,textfont:getWidth(">")+20)
     local btnH = math.max(h/10,textfont:getHeight()+5)
     printf("Modo de jogo: "..mode,textfont,x,y+5,w-btnW*2-15,"left",{1,1,1},drawColors.shading,3)
@@ -502,7 +502,8 @@ function drawPanic()
     love.graphics.rectangle("fill",0,0,screenw,screenh)
     love.graphics.setColor(1,1,1)
     local y = screenh/2-font:getHeight()*3-5
-    love.graphics.printf("ERRO",font,0,y,screenw,"center")
+    love.graphics.printf("ERRO",font,0,0,screenw,"center")
+    love.graphics.rectangle("fill",15,font:getHeight()+15,screenw-15,5)
     y=y+font:getHeight()+5
     love.graphics.printf(PANICMESSAGE,font,0,y,screenw,"center")
     if PANICDT<0 then
