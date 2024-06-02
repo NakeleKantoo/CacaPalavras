@@ -13,15 +13,19 @@ function love.load()
     board = newBoard()
     changeVolume()
     --for i=1,#board do print(board[i]) end
+    start = love.timer.getTime()
+    timer = 1
+    current = 0
 end
 
 function love.update(dt)
     if PANIC then PANICDT=PANICDT-dt end
-    if gameState.paused==false then deltaTime=deltaTime+dt end --dt only counts when in game
+    if gameState.paused==false then current=love.timer.getTime()-start end --dt only counts when in game
     --dt checking
-    if deltaTime>=1 and focused then
+    if current>timer and focused then
         gameScore.time=increaseSecond()
-        deltaTime=deltaTime-1
+        current=0
+        start = love.timer.getTime()
         saveStats()
         saveSettings()
     end
