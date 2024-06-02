@@ -8,6 +8,8 @@ stats,numStats = loadStatistics()
 
 settings,numSettings = loadSettings()
 
+focused = true
+
 boardW = settings.size.possible[settings.size.value]
 boardH = settings.size.possible[settings.size.value]
 blockW = 35

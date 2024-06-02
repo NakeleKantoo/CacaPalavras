@@ -19,7 +19,7 @@ function love.update(dt)
     if PANIC then PANICDT=PANICDT-dt end
     if gameState.paused==false then deltaTime=deltaTime+dt end --dt only counts when in game
     --dt checking
-    if deltaTime>=1 then
+    if deltaTime>=1 and focused then
         gameScore.time=increaseSecond()
         deltaTime=deltaTime-1
         saveStats()
@@ -140,6 +140,10 @@ function love.mousepressed(x,y)
             end
         end
     end
+end
+
+function love.focus(f)
+    focused=f
 end
 
 
