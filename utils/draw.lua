@@ -468,7 +468,6 @@ function drawNewGame()
     local maxW = math.min(textfont:getWidth(txt)+20,screenw-50)
     local nh = 0
     local tmp, many = textfont:getWrap(txt,w-btnW*2-15) --god damn.
-    print(#many)
     nh=nh+((textfont:getHeight())*#many)
     y=y+nh
 
@@ -505,7 +504,9 @@ function drawPanic()
     love.graphics.printf("ERRO",font,0,0,screenw,"center")
     love.graphics.rectangle("fill",15,font:getHeight()+5,screenw-30,5)
     y=y+font:getHeight()+5
-    love.graphics.printf(PANICMESSAGE,font,0,y,screenw,"center")
+    local align = "center"
+    if checkMobile() then align="justify" end
+    love.graphics.printf(PANICMESSAGE,font,0,y,screenw, align)
     if PANICDT<0 then
         y=screenh-font:getHeight()-15
         local w,wrap = font:getWrap("Pressione em qualquer lugar para voltar.",screenw)
