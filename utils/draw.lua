@@ -503,7 +503,7 @@ function drawPanic()
     love.graphics.setColor(1,1,1)
     local y = screenh/2-font:getHeight()*3-5
     love.graphics.printf("ERRO",font,0,0,screenw,"center")
-    love.graphics.rectangle("fill",15,font:getHeight()+15,screenw-15,5)
+    love.graphics.rectangle("fill",15,font:getHeight()+5,screenw-30,5)
     y=y+font:getHeight()+5
     love.graphics.printf(PANICMESSAGE,font,0,y,screenw,"center")
     if PANICDT<0 then
