@@ -78,8 +78,8 @@ function love.draw()
     end
     drawFoundLines()
     drawDock()
+    drawTime()
     if gameState.mode=="normal" then
-        drawTime()
         drawPoints()
     end
     if gameState.mode~="tranquilo" then
