@@ -104,13 +104,16 @@ function love.mousepressed(x,y)
     elseif checkForUIs()==false then
         local btn = checkButtons(x,y)
         if btn==1 then -- settings
+            gameState.lastPauseState = gameState.paused
             gameState.paused=true
             gameState.inUI.configMenu=true
         elseif btn==2 then -- new
+            gameState.lastPauseState = gameState.paused
             gameState.paused=true
             gameState.inUI.newMenu=true
             --newGame(0,0)
         elseif btn==3 then -- store (fuck)
+            gameState.lastPauseState = gameState.paused
             gameState.paused=true
             gameState.inUI.statsMenu=true
         end
@@ -119,7 +122,7 @@ function love.mousepressed(x,y)
             local btn = settingsCollision(x,y)
             if btn=="pressed" then
             elseif btn=="outside" then
-                gameState.paused=false
+                gameState.paused=gameState.lastPauseState
                 gameState.inUI.configMenu=false
             end
         end
@@ -133,14 +136,14 @@ function love.mousepressed(x,y)
             local btn = statsCollision(x,y)
             if btn=="outside" then
                 gameState.inUI.statsMenu=false
-                gameState.paused=false
+                gameState.paused=gameState.lastPauseState
             end
         end
         if gameState.inUI.newMenu then
             local btn = newCollision(x,y)
             if btn=="outside" then
                 gameState.inUI.newMenu=false
-                gameState.paused=false
+                gameState.paused=gameState.lastPauseState
             end
         end
     end

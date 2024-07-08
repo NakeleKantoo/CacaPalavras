@@ -36,6 +36,7 @@ coins = 0
 pressed = false
 
 gameState = {
+    lastPauseState = false,
     paused = false,
     inUI = {
         winMenu = false,
